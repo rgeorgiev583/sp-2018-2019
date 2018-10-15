@@ -2,19 +2,27 @@
 #include <fcntl.h>
 
 #define BUFFER_SIZE 1000
-#define DEFAULT_FILE_MODE 0644
 #define FD_OFFSET 2
 
 int main(int argc, char const* const* argv)
 {
     for (int i = 1; i < argc; i++)
-        creat(argv[i], DEFAULT_FILE_MODE);
+        open(argv[i], O_RDONLY);
 
     char buffer[BUFFER_SIZE];
     size_t count;
-    while ((count = read(STDIN_FILENO, buffer, BUFFER_SIZE)) > 0)
+    if (argc >= 2)
+    {
         for (int i = 1; i < argc; i++)
-            write(FD_OFFSET + i, buffer, count);
+            while ((count = read(FD_OFFSET + i, buffer, BUFFER_SIZE)) > 0)
+                write(STDOUT_FILENO, buffer, count);
+    }
+    else
+    {
+        while ((count = read(STDIN_FILENO, buffer, BUFFER_SIZE)) > 0)
+            write(STDOUT_FILENO, buffer, count);
+    }
+
 
     return 0;
 }

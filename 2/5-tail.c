@@ -1,17 +1,21 @@
 #include <unistd.h>
 #include <fcntl.h>
-
-#define BUFFER_SIZE 1000
+#include <stdlib.h>
 
 int main(int argc, const char* const* argv)
 {
-    if (argc < 2)
+    if (argc < 3)
         return 1;
 
-    int fd = open(argv[1], O_RDONLY, 0644);
-    char buffer[BUFFER_SIZE];
-    size_t count;
-    while (count = read(0, buffer, BUFFER_SIZE))
-        write(fd, buffer, count);
+    int input_fileno = open(argv[1], O_RDONLY);
+    int total_count = atoi(argv[2]);
+    char buffer;
+    size_t current_count = 0;
+    while (current_count < total_count && read(input_fileno, &buffer, 1) > 0)
+        current_count++;
+
+    while (read(input_fileno, &buffer, 1) > 0)
+        write(STDOUT_FILENO, &buffer, 1);
+
     return 0;
 }

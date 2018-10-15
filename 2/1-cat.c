@@ -6,8 +6,8 @@ int main()
 {
     char buffer[BUFFER_SIZE];
     size_t count;
-    while (count = read(0, buffer, BUFFER_SIZE))
-        write(1, buffer, count);
+    while ((count = read(STDIN_FILENO, buffer, BUFFER_SIZE)) > 0)
+        write(STDOUT_FILENO, buffer, count);
 
     return 0;
 }

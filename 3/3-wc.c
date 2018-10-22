@@ -3,7 +3,7 @@
 #include <stdio.h>
 
 #define BUFFER_SIZE 1000
-#define FD_OFFSET 2
+#define MAX_STD_FILENO 2
 #define NEWLINE_CHARACTER '\n'
 
 #define REQUIRED_ARGUMENT_COUNT 0
@@ -33,7 +33,7 @@ int main(int argc, char const* const* argv)
         for (int i = 1; i < argc - REQUIRED_ARGUMENT_COUNT; i++)
         {
             size_t count_bytes, count_lines;
-            wc(FD_OFFSET + i, &count_bytes, &count_lines);
+            wc(MAX_STD_FILENO + i, &count_bytes, &count_lines);
             printf(" %u %u %s\n", count_lines, count_bytes, argv[REQUIRED_ARGUMENT_COUNT + i]);
             total_count_bytes += count_bytes;
             total_count_lines += count_lines;

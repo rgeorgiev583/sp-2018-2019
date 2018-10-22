@@ -4,7 +4,7 @@
 #include <stdbool.h>
 
 #define BUFFER_SIZE 1000
-#define FD_OFFSET 2
+#define MAX_STD_FILENO 2
 #define NEWLINE_CHARACTER '\n'
 #define STRING_TERMINATOR '\0'
 
@@ -53,7 +53,7 @@ int main(int argc, char const* const* argv)
     if (argc > REQUIRED_ARGUMENT_COUNT + 1)
     {
         for (int i = 1; i < argc - REQUIRED_ARGUMENT_COUNT; i++)
-            fgrep(FD_OFFSET + i, argv[1]);
+            fgrep(MAX_STD_FILENO + i, argv[1]);
     }
     else
         fgrep(STDIN_FILENO, argv[1]);

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 
 #define BUFFER_SIZE 1000
-#define FD_OFFSET 2
+#define MAX_STD_FILENO 2
 #define NEWLINE_CHARACTER '\n'
 
 #define REQUIRED_ARGUMENT_COUNT 2
@@ -42,7 +42,7 @@ int main(int argc, char const* const* argv)
     if (argc > REQUIRED_ARGUMENT_COUNT + 1)
     {
         for (int i = 1; i < argc - REQUIRED_ARGUMENT_COUNT; i++)
-            cut(FD_OFFSET + i, from_position, to_position);
+            cut(MAX_STD_FILENO + i, from_position, to_position);
     }
     else
         cut(STDIN_FILENO, from_position, to_position);

@@ -4,9 +4,11 @@
 #define BUFFER_SIZE 1000
 #define DEFAULT_FILE_MODE 0644
 
+#define REQUIRED_ARGUMENT_COUNT 1
+
 int main(int argc, const char* const* argv)
 {
-    if (argc < 2)
+    if (argc < REQUIRED_ARGUMENT_COUNT + 1)
         return 1;
 
     int output_fileno = creat(argv[1], DEFAULT_FILE_MODE);

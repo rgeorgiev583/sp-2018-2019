@@ -36,11 +36,11 @@ int main(int argc, char const* const* argv)
     size_t from_position = atoi(argv[1]);
     size_t to_position = atoi(argv[2]);
 
-    for (int i = REQUIRED_ARGUMENT_COUNT + 1; i < argc; i++)
-        open(argv[i], O_RDONLY);
-
     if (argc > REQUIRED_ARGUMENT_COUNT + 1)
     {
+        for (int i = REQUIRED_ARGUMENT_COUNT + 1; i < argc; i++)
+            open(argv[i], O_RDONLY);
+
         for (int i = 1; i < argc - REQUIRED_ARGUMENT_COUNT; i++)
             cut(MAX_STD_FILENO + i, from_position, to_position);
     }

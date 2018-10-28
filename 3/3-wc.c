@@ -6,7 +6,7 @@
 #define MAX_STD_FILENO 2
 #define NEWLINE_CHARACTER '\n'
 
-#define REQUIRED_ARGUMENT_COUNT 0
+#define REQUIRED_ARG_COUNT 0
 
 void wc(int fileno, size_t* count_bytes, size_t* count_lines)
 {
@@ -25,16 +25,16 @@ int main(int argc, char const* const* argv)
 {
     size_t total_count_bytes = 0, total_count_lines = 0;
 
-    if (argc > REQUIRED_ARGUMENT_COUNT + 1)
+    if (argc > REQUIRED_ARG_COUNT + 1)
     {
-        for (int i = REQUIRED_ARGUMENT_COUNT + 1; i < argc; i++)
+        for (int i = REQUIRED_ARG_COUNT + 1; i < argc; i++)
             open(argv[i], O_RDONLY);
 
-        for (int i = 1; i < argc - REQUIRED_ARGUMENT_COUNT; i++)
+        for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
         {
             size_t count_bytes, count_lines;
             wc(MAX_STD_FILENO + i, &count_bytes, &count_lines);
-            printf(" %u %u %s\n", count_lines, count_bytes, argv[REQUIRED_ARGUMENT_COUNT + i]);
+            printf(" %u %u %s\n", count_lines, count_bytes, argv[REQUIRED_ARG_COUNT + i]);
             total_count_bytes += count_bytes;
             total_count_lines += count_lines;
         }

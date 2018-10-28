@@ -2,11 +2,11 @@
 #include <fcntl.h>
 #include <stdlib.h>
 
-#define REQUIRED_ARGUMENT_COUNT 2
+#define REQUIRED_ARG_COUNT 2
 
 int main(int argc, const char* const* argv)
 {
-    if (argc < REQUIRED_ARGUMENT_COUNT + 1)
+    if (argc < REQUIRED_ARG_COUNT + 1)
         return 1;
 
     int total_count = atoi(argv[1]);

@@ -8,7 +8,7 @@
 #define NEWLINE_CHARACTER '\n'
 #define STRING_TERMINATOR '\0'
 
-#define REQUIRED_ARGUMENT_COUNT 1
+#define REQUIRED_ARG_COUNT 1
 #define MAX_LINE_LENGTH 80
 
 void fgrep(int fileno, const char* pattern)
@@ -25,7 +25,7 @@ void fgrep(int fileno, const char* pattern)
         while (current_line_length < MAX_LINE_LENGTH && (is_not_eof = read(fileno, &buffer[current_line_length], 1) > 0) && NEWLINE_CHARACTER != buffer[current_line_length])
             current_line_length++;
 
-        for (size_t i = 0; i < current_line_length; i++)
+        for (size_t i = 0; i < current_line_length - pattern_length; i++)
         {
             size_t j;
             for (j = 0; j < pattern_length; j++)
@@ -44,15 +44,15 @@ void fgrep(int fileno, const char* pattern)
 
 int main(int argc, char const* const* argv)
 {
-    if (argc < REQUIRED_ARGUMENT_COUNT + 1)
+    if (argc < REQUIRED_ARG_COUNT + 1)
         return 1;
 
-    if (argc > REQUIRED_ARGUMENT_COUNT + 1)
+    if (argc > REQUIRED_ARG_COUNT + 1)
     {
-        for (int i = REQUIRED_ARGUMENT_COUNT + 1; i < argc; i++)
+        for (int i = REQUIRED_ARG_COUNT + 1; i < argc; i++)
             open(argv[i], O_RDONLY);
 
-        for (int i = 1; i < argc - REQUIRED_ARGUMENT_COUNT; i++)
+        for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
             fgrep(MAX_STD_FILENO + i, argv[1]);
     }
     else

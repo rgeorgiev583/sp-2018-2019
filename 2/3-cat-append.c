@@ -5,11 +5,11 @@
 #define DEFAULT_FILE_MODE 0644
 #define APPEND_FILE_FLAGS O_WRONLY | O_CREAT | O_APPEND
 
-#define REQUIRED_ARGUMENT_COUNT 1
+#define REQUIRED_ARG_COUNT 1
 
 int main(int argc, const char* const* argv)
 {
-    if (argc < REQUIRED_ARGUMENT_COUNT + 1)
+    if (argc < REQUIRED_ARG_COUNT + 1)
         return 1;
 
     int output_fileno = open(argv[1], APPEND_FILE_FLAGS, DEFAULT_FILE_MODE);

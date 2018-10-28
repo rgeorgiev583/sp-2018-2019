@@ -4,11 +4,11 @@
 #define BUFFER_SIZE 1000
 #define DEFAULT_FILE_MODE 0644
 
-#define REQUIRED_ARGUMENT_COUNT 2
+#define REQUIRED_ARG_COUNT 2
 
 int main(int argc, const char* const* argv)
 {
-    if (argc < REQUIRED_ARGUMENT_COUNT + 1)
+    if (argc < REQUIRED_ARG_COUNT + 1)
         return 1;
 
     int input_fileno = open(argv[1], O_RDONLY);

@@ -6,7 +6,7 @@
 #define MAX_STD_FILENO 2
 #define NEWLINE_CHARACTER '\n'
 
-#define REQUIRED_ARGUMENT_COUNT 1
+#define REQUIRED_ARG_COUNT 1
 
 void head(int fileno, size_t total_count)
 {
@@ -22,17 +22,17 @@ void head(int fileno, size_t total_count)
 
 int main(int argc, char const* const* argv)
 {
-    if (argc < REQUIRED_ARGUMENT_COUNT + 1)
+    if (argc < REQUIRED_ARG_COUNT + 1)
         return 1;
 
     size_t total_count = atoi(argv[1]);
 
-    if (argc > REQUIRED_ARGUMENT_COUNT + 1)
+    if (argc > REQUIRED_ARG_COUNT + 1)
     {
-        for (int i = REQUIRED_ARGUMENT_COUNT + 1; i < argc; i++)
+        for (int i = REQUIRED_ARG_COUNT + 1; i < argc; i++)
             open(argv[i], O_RDONLY);
 
-        for (int i = 1; i < argc - REQUIRED_ARGUMENT_COUNT; i++)
+        for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
             head(MAX_STD_FILENO + i, total_count);
     }
     else

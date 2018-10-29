@@ -25,7 +25,7 @@ void fgrep(int fileno, const char* pattern)
         while (current_line_length < MAX_LINE_LENGTH && (is_not_eof = read(fileno, &buffer[current_line_length], 1) > 0) && NEWLINE_CHARACTER != buffer[current_line_length])
             current_line_length++;
 
-        for (size_t i = 0; i < current_line_length - pattern_length; i++)
+        for (size_t i = 0; i < current_line_length - pattern_length + 1; i++)
         {
             size_t j;
             for (j = 0; j < pattern_length; j++)

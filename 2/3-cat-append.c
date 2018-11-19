@@ -14,7 +14,7 @@ int main(int argc, const char* const* argv)
 
     int output_fileno = open(argv[1], APPEND_FILE_FLAGS, DEFAULT_FILE_MODE);
     char buffer[BUFFER_SIZE];
-    size_t count;
+    ssize_t count;
     while ((count = read(STDIN_FILENO, buffer, BUFFER_SIZE)) > 0)
         write(output_fileno, buffer, count);
 

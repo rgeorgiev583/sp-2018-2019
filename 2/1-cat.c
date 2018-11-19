@@ -5,7 +5,7 @@
 int main()
 {
     char buffer[BUFFER_SIZE];
-    size_t count;
+    ssize_t count;
     while ((count = read(STDIN_FILENO, buffer, BUFFER_SIZE)) > 0)
         write(STDOUT_FILENO, buffer, count);
 

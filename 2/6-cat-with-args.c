@@ -9,7 +9,7 @@
 int main(int argc, char const* const* argv)
 {
     char buffer[BUFFER_SIZE];
-    size_t count;
+    ssize_t count;
     if (argc > REQUIRED_ARG_COUNT + 1)
     {
         for (int i = REQUIRED_ARG_COUNT + 1; i < argc; i++)

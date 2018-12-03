@@ -17,7 +17,7 @@ int fork_exec(const char* program_name, char* const* command_argv)
     }
     else if (0 == pid && -1 == execvp(command_argv[0], command_argv))
     {
-        printf("%s: error: command `%s` does not exist\n", program_name, command_argv[0]);
+        fprintf(stderr, "%s: error: command `%s` does not exist\n", program_name, command_argv[0]);
         exit(3);
     }
 

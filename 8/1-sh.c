@@ -53,6 +53,12 @@ int main(int argc, const char* const* argv)
                 perror(argv[0]);
                 return 4;
             }
+            else
+            {
+                int exit_status = WEXITSTATUS(status);
+                if (0 != exit_status)
+                    fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", argv[0], command_argv[0], pid, exit_status);
+            }
         }
     }
 

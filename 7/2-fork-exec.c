@@ -10,15 +10,18 @@ int main(int argc, char* const* argv)
         return 1;
 
     pid_t pid = fork();
-    if (-1 == pid)
+    switch (pid)
     {
+    case -1:
         perror(argv[0]);
         return 2;
-    }
-    else if (0 == pid && -1 == execvp(argv[1], argv + 1))
-    {
-        perror(argv[0]);
-        return 3;
+
+    case 0:
+        if (-1 == execvp(argv[1], argv + 1))
+        {
+            perror(argv[0]);
+            return 3;
+        }
     }
 
     int status;

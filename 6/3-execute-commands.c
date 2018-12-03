@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <sys/wait.h>
 #include <stdio.h>
 
 int main(int argc, char* const* argv)
@@ -20,6 +21,8 @@ int main(int argc, char* const* argv)
         }
     }
 
+    for (int i = 1; i < argc; i++)
+        wait(NULL);
 
     return 0;
 }

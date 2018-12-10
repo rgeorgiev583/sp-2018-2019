@@ -78,7 +78,7 @@ next:
             }
             else if (0 == strcmp(command_argv[i], "||"))
             {
-                op_types[op_count] = 1;
+                op_types[op_count] = 2;
                 next_subcommand_argv_positions[op_count] = i + 1;
                 command_argv[i] = NULL;
                 op_count++;

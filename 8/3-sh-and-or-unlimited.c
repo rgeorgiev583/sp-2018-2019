@@ -31,7 +31,7 @@ int fork_exec(const char* program_name, char* const* command_argv)
     {
         int exit_status = WEXITSTATUS(status);
         if (0 != exit_status)
-            fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", argv[0], command_argv[0], pid, exit_status);
+            fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", program_name, command_argv[0], pid, exit_status);
     }
 
     return WEXITSTATUS(status);

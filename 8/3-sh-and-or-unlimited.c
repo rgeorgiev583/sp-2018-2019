@@ -85,14 +85,14 @@ next:
             }
         }
 
-        int exit_status = fork_exec(command_argv[0], command_argv);
+        int exit_status = fork_exec(argv[0], command_argv);
         for (int i = 0; i < op_count; i++)
         {
             if ((1 == op_types[i] && 0 != exit_status) || (2 == op_types[i] && 0 == exit_status))
                 goto next;
 
             int subcommand_argv_position = next_subcommand_argv_positions[i];
-            exit_status = fork_exec(command_argv[subcommand_argv_position], (char* const*)command_argv + subcommand_argv_position);
+            exit_status = fork_exec(argv[0], (char* const*)command_argv + subcommand_argv_position);
         }
     }
 

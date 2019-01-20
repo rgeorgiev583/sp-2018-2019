@@ -86,7 +86,7 @@ int main(int argc, const char* const* argv)
         if ((1 == op_type && 0 != exit_status) || (2 == op_type && 0 == exit_status))
             continue;
 
-        fork_exec(command_argv[next_subcommand_argv_position], (char* const*)command_argv + next_subcommand_argv_position);
+        fork_exec(argv[0], (char* const*)command_argv + next_subcommand_argv_position);
     }
 
     return 0;

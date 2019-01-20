@@ -65,32 +65,35 @@ int main(int argc, const char* const* argv)
         if (0 == strcmp(command_argv[0], "exit") || 0 == strcmp(command_argv[0], "quit"))
             return 0;
 
-        int op_count = 0, op_types[MAX_ARG_COUNT], next_subcommand_argv_positions[MAX_ARG_COUNT];
+        int op_count = 0, op_types[MAX_ARG_COUNT], subcommand_argv_positions[MAX_ARG_COUNT];
+        op_types[op_count] = 0;
+        subcommand_argv_positions[0] = 0;
         for (int i = 0; i < arg_count; i++)
         {
             if (0 == strcmp(command_argv[i], "&&"))
             {
-                op_types[op_count] = 1;
-                next_subcommand_argv_positions[op_count] = i + 1;
-                command_argv[i] = NULL;
                 op_count++;
+                op_types[op_count] = 1;
+                subcommand_argv_positions[op_count] = i + 1;
+                command_argv[i] = NULL;
             }
             else if (0 == strcmp(command_argv[i], "||"))
             {
-                op_types[op_count] = 2;
-                next_subcommand_argv_positions[op_count] = i + 1;
-                command_argv[i] = NULL;
                 op_count++;
+                op_types[op_count] = 2;
+                subcommand_argv_positions[op_count] = i + 1;
+                command_argv[i] = NULL;
             }
         }
+        op_count++;
 
-        int exit_status = fork_exec(argv[0], command_argv);
+        int exit_status = 0;
         for (int i = 0; i < op_count; i++)
         {
             if ((1 == op_types[i] && 0 != exit_status) || (2 == op_types[i] && 0 == exit_status))
                 break;
 
-            int subcommand_argv_position = next_subcommand_argv_positions[i];
+            int subcommand_argv_position = subcommand_argv_positions[i];
             exit_status = fork_exec(argv[0], (char* const*)command_argv + subcommand_argv_position);
         }
     }

@@ -41,7 +41,6 @@ int main(int argc, const char* const* argv)
 {
     while (1)
     {
-next:
         write(1, "$ ", 2);
         char command[BUFFER_SIZE];
         ssize_t command_len = read(0, command, BUFFER_SIZE);
@@ -89,7 +88,7 @@ next:
         for (int i = 0; i < op_count; i++)
         {
             if ((1 == op_types[i] && 0 != exit_status) || (2 == op_types[i] && 0 == exit_status))
-                goto next;
+                break;
 
             int subcommand_argv_position = next_subcommand_argv_positions[i];
             exit_status = fork_exec(argv[0], (char* const*)command_argv + subcommand_argv_position);

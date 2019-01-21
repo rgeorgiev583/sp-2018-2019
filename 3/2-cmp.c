@@ -2,7 +2,7 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-#define NEWLINE_CHARACTER '\n'
+#define NEWLINE_CHAR '\n'
 
 #define REQUIRED_ARG_COUNT 2
 
@@ -26,36 +26,36 @@ int main(int argc, const char* const* argv)
     }
 
     char buffer1, buffer2;
-    size_t current_byte = 0;
-    size_t current_line = 0;
-    ssize_t read_result1, read_result2;
+    size_t current_char_position = 0;
+    size_t current_line_position = 0;
+    ssize_t read_count1, read_count2;
     do
     {
-        read_result1 = read(fileno1, &buffer1, 1);
-        if (-1 == read_result1)
+        read_count1 = read(fileno1, &buffer1, 1);
+        if (-1 == read_count1)
         {
             perror(argv[0]);
             return 3;
         }
 
-        read_result2 = read(fileno2, &buffer2, 1);
-        if (-1 == read_result2)
+        read_count2 = read(fileno2, &buffer2, 1);
+        if (-1 == read_count2)
         {
             perror(argv[0]);
             return 3;
         }
 
-        if (0 == read_result1 || 0 == read_result2)
+        if (0 == read_count1 || 0 == read_count2)
             break;
 
-        current_byte++;
-        if (NEWLINE_CHARACTER == buffer1)
-            current_line++;
+        current_char_position++;
+        if (NEWLINE_CHAR == buffer1)
+            current_line_position++;
     }
     while (buffer1 == buffer2);
 
-    if (0 != read_result1 || 0 != read_result2)
-        printf("%s %s differ: byte %lu, line %lu\n", argv[1], argv[2], current_byte, current_line);
+    if (0 != read_count1 || 0 != read_count2)
+        printf("%s %s differ: byte %lu, line %lu\n", argv[1], argv[2], current_char_position, current_line_position);
 
     return 0;
 }

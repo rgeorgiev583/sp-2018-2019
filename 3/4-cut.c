@@ -5,32 +5,32 @@
 
 #define BUFFER_SIZE 1000
 #define MAX_STD_FILENO 2
-#define NEWLINE_CHARACTER '\n'
+#define NEWLINE_CHAR '\n'
 
 #define REQUIRED_ARG_COUNT 2
 
-void cut(const char* program_name, int fileno, size_t from_position, size_t to_position)
+void cut(const char* program_name, int fileno, size_t from_position_in_line, size_t to_position_in_line)
 {
-    size_t current_position = 0;
+    size_t current_position_in_line = 0;
     char buffer;
-    ssize_t read_result;
-    while ((read_result = read(fileno, &buffer, 1)) != 0)
+    ssize_t read_count;
+    while ((read_count = read(fileno, &buffer, 1)) != 0)
     {
-        if (-1 == read_result)
+        if (-1 == read_count)
         {
             perror(program_name);
             exit(3);
         }
 
-        if (NEWLINE_CHARACTER == buffer)
+        if (NEWLINE_CHAR == buffer)
         {
-            current_position = 0;
+            current_position_in_line = 0;
             write(STDOUT_FILENO, &buffer, 1);
         }
         else
         {
-            current_position++;
-            if (current_position >= from_position && current_position <= to_position)
+            current_position_in_line++;
+            if (current_position_in_line >= from_position_in_line && current_position_in_line <= to_position_in_line)
                 write(STDOUT_FILENO, &buffer, 1);
         }
     }
@@ -41,15 +41,15 @@ int main(int argc, char const* const* argv)
     if (argc < REQUIRED_ARG_COUNT + 1)
         return 1;
 
-    int from_position = atoi(argv[1]);
-    if (from_position < 0)
+    int from_position_in_line = atoi(argv[1]);
+    if (from_position_in_line < 0)
     {
         perror(argv[0]);
         return 2;
     }
 
-    int to_position = atoi(argv[2]);
-    if (to_position < 0)
+    int to_position_in_line = atoi(argv[2]);
+    if (to_position_in_line < 0)
     {
         perror(argv[0]);
         return 2;
@@ -67,10 +67,10 @@ int main(int argc, char const* const* argv)
         }
 
         for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
-            cut(argv[0], MAX_STD_FILENO + i, from_position, to_position);
+            cut(argv[0], MAX_STD_FILENO + i, from_position_in_line, to_position_in_line);
     }
     else
-        cut(argv[0], STDIN_FILENO, from_position, to_position);
+        cut(argv[0], STDIN_FILENO, from_position_in_line, to_position_in_line);
 
     return 0;
 }

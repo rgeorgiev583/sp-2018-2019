@@ -25,11 +25,11 @@ int main(int argc, const char* const* argv)
     }
 
     char buffer;
-    ssize_t read_result;
+    ssize_t read_count;
     int current_count = 0;
-    while (current_count < total_count && (read_result = read(input_fileno, &buffer, 1)) != 0)
+    while (current_count < total_count && (read_count = read(input_fileno, &buffer, 1)) != 0)
     {
-        if (-1 == read_result)
+        if (-1 == read_count)
         {
             perror(argv[0]);
             return 3;

@@ -27,16 +27,16 @@ int main(int argc, const char* const* argv)
     }
 
     char buffer[BUFFER_SIZE];
-    ssize_t count;
-    while ((count = read(input_fileno, buffer, BUFFER_SIZE)) != 0)
+    ssize_t read_count;
+    while ((read_count = read(input_fileno, buffer, BUFFER_SIZE)) != 0)
     {
-        if (-1 == count)
+        if (-1 == read_count)
         {
             perror(argv[0]);
             return 3;
         }
 
-        if (-1 == write(output_fileno, buffer, count))
+        if (-1 == write(output_fileno, buffer, read_count))
         {
             perror(argv[0]);
             return 4;

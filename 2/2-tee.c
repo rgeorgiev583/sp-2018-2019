@@ -20,18 +20,18 @@ int main(int argc, const char* const* argv)
     }
 
     char buffer[BUFFER_SIZE];
-    ssize_t count;
-    while ((count = read(STDIN_FILENO, buffer, BUFFER_SIZE)) != 0)
+    ssize_t read_count;
+    while ((read_count = read(STDIN_FILENO, buffer, BUFFER_SIZE)) != 0)
     {
-        if (-1 == count)
+        if (-1 == read_count)
         {
             perror(argv[0]);
             return 3;
         }
 
-        write(STDOUT_FILENO, buffer, count);
+        write(STDOUT_FILENO, buffer, read_count);
 
-        if (-1 == write(output_fileno, buffer, count))
+        if (-1 == write(output_fileno, buffer, read_count))
         {
             perror(argv[0]);
             return 4;

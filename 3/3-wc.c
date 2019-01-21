@@ -5,33 +5,33 @@
 
 #define BUFFER_SIZE 1000
 #define MAX_STD_FILENO 2
-#define NEWLINE_CHARACTER '\n'
+#define NEWLINE_CHAR '\n'
 
 #define REQUIRED_ARG_COUNT 0
 
-void wc(const char* program_name, int fileno, size_t* count_bytes, size_t* count_lines)
+void wc(const char* program_name, int fileno, size_t* char_count, size_t* line_count)
 {
     char buffer;
-    *count_bytes = 0;
-    *count_lines = 0;
-    ssize_t read_result;
-    while ((read_result = read(fileno, &buffer, 1)) != 0)
+    *char_count = 0;
+    *line_count = 0;
+    ssize_t read_count;
+    while ((read_count = read(fileno, &buffer, 1)) != 0)
     {
-        if (-1 == read_result)
+        if (-1 == read_count)
         {
             perror(program_name);
             exit(3);
         }
 
-        (*count_bytes)++;
-        if (NEWLINE_CHARACTER == buffer)
-            (*count_lines)++;
+        (*char_count)++;
+        if (NEWLINE_CHAR == buffer)
+            (*line_count)++;
     }
 }
 
 int main(int argc, char const* const* argv)
 {
-    size_t total_count_bytes = 0, total_count_lines = 0;
+    size_t total_char_count = 0, total_line_count = 0;
 
     if (argc > REQUIRED_ARG_COUNT + 1)
     {
@@ -46,23 +46,23 @@ int main(int argc, char const* const* argv)
 
         for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
         {
-            size_t count_bytes, count_lines;
-            wc(argv[0], MAX_STD_FILENO + i, &count_bytes, &count_lines);
-            printf(" %u %u %s\n", count_lines, count_bytes, argv[REQUIRED_ARG_COUNT + i]);
-            total_count_bytes += count_bytes;
-            total_count_lines += count_lines;
+            size_t char_count, line_count;
+            wc(argv[0], MAX_STD_FILENO + i, &char_count, &line_count);
+            printf(" %u %u %s\n", line_count, char_count, argv[REQUIRED_ARG_COUNT + i]);
+            total_char_count += char_count;
+            total_line_count += line_count;
         }
     }
     else
     {
-        size_t count_bytes = 0, count_lines = 0;
-        wc(argv[0], STDIN_FILENO, &count_bytes, &count_lines);
-        printf(" %u %u\n", count_lines, count_bytes);
-        total_count_bytes += count_bytes;
-        total_count_lines += count_lines;
+        size_t char_count = 0, line_count = 0;
+        wc(argv[0], STDIN_FILENO, &char_count, &line_count);
+        printf(" %u %u\n", line_count, char_count);
+        total_char_count += char_count;
+        total_line_count += line_count;
     }
 
-    printf(" %u %u total\n", total_count_lines, total_count_bytes);
+    printf(" %u %u total\n", total_line_count, total_char_count);
 
     return 0;
 }

@@ -38,51 +38,51 @@ void sh(const char* program_name, FILE* input_file)
 
         char* command_buffer = NULL;
         size_t command_buffer_size = 0;
-        ssize_t command_len = getline(&command_buffer, &command_buffer_size, input_file);
-        if (-1 == command_len)
+        ssize_t command_length = getline(&command_buffer, &command_buffer_size, input_file);
+        if (-1 == command_length)
             break;
 
-        command_buffer[command_len - 1] = '\0';
+        command_buffer[command_length - 1] = '\0';
 
         char* command_argv[MAX_ARG_COUNT];
         command_argv[0] = strtok(command_buffer, " ");
-        int arg_count = 0;
+        int command_argc = 0;
         do
         {
-            arg_count++;
-            command_argv[arg_count] = strtok(NULL, " ");
+            command_argc++;
+            command_argv[command_argc] = strtok(NULL, " ");
         }
-        while (NULL != command_argv[arg_count]);
+        while (NULL != command_argv[command_argc]);
 
         if (0 == strcmp(command_argv[0], "exit") || 0 == strcmp(command_argv[0], "quit"))
             exit(0);
 
-        int op_count = 0, op_types[MAX_ARG_COUNT], subcommand_argv_positions[MAX_ARG_COUNT];
-        op_types[op_count] = 0;
+        int operator_count = 0, operator_types[MAX_ARG_COUNT], subcommand_argv_positions[MAX_ARG_COUNT];
+        operator_types[operator_count] = 0;
         subcommand_argv_positions[0] = 0;
-        for (int i = 0; i < arg_count; i++)
+        for (int i = 0; i < command_argc; i++)
         {
             if (0 == strcmp(command_argv[i], "&&"))
             {
-                op_count++;
-                op_types[op_count] = 1;
-                subcommand_argv_positions[op_count] = i + 1;
+                operator_count++;
+                operator_types[operator_count] = 1;
+                subcommand_argv_positions[operator_count] = i + 1;
                 command_argv[i] = NULL;
             }
             else if (0 == strcmp(command_argv[i], "||"))
             {
-                op_count++;
-                op_types[op_count] = 2;
-                subcommand_argv_positions[op_count] = i + 1;
+                operator_count++;
+                operator_types[operator_count] = 2;
+                subcommand_argv_positions[operator_count] = i + 1;
                 command_argv[i] = NULL;
             }
         }
-        op_count++;
+        operator_count++;
 
         int exit_status = 0;
-        for (int i = 0; i < op_count; i++)
+        for (int i = 0; i < operator_count; i++)
         {
-            if ((1 == op_types[i] && 0 != exit_status) || (2 == op_types[i] && 0 == exit_status))
+            if ((1 == operator_types[i] && 0 != exit_status) || (2 == operator_types[i] && 0 == exit_status))
                 break;
 
             int subcommand_argv_position = subcommand_argv_positions[i];

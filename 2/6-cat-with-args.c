@@ -10,7 +10,7 @@
 int main(int argc, char const* const* argv)
 {
     char buffer[BUFFER_SIZE];
-    ssize_t count;
+    ssize_t read_count;
     if (argc > REQUIRED_ARG_COUNT + 1)
     {
         for (int i = REQUIRED_ARG_COUNT + 1; i < argc; i++)
@@ -24,29 +24,29 @@ int main(int argc, char const* const* argv)
 
         for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
         {
-            while ((count = read(MAX_STD_FILENO + i, buffer, BUFFER_SIZE)) != 0)
+            while ((read_count = read(MAX_STD_FILENO + i, buffer, BUFFER_SIZE)) != 0)
             {
-                if (-1 == count)
+                if (-1 == read_count)
                 {
                     perror(argv[0]);
                     return 3;
                 }
 
-                write(STDOUT_FILENO, buffer, count);
+                write(STDOUT_FILENO, buffer, read_count);
             }
         }
     }
     else
     {
-        while ((count = read(STDIN_FILENO, buffer, BUFFER_SIZE)) != 0)
+        while ((read_count = read(STDIN_FILENO, buffer, BUFFER_SIZE)) != 0)
         {
-            if (-1 == count)
+            if (-1 == read_count)
             {
                 perror(argv[0]);
                 return 3;
             }
 
-            write(STDOUT_FILENO, buffer, count);
+            write(STDOUT_FILENO, buffer, read_count);
         }
     }
 

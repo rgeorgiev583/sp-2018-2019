@@ -26,8 +26,8 @@ int main(int argc, const char* const* argv)
     int flags = O_WRONLY | O_CREAT;
     if (do_lseek)
         flags |= O_APPEND;
-    int fileno = open(argv[base_arg], flags, DEFAULT_FILE_MODE);
-    if (-1 == fileno)
+    int output_fileno = open(argv[base_arg], flags, DEFAULT_FILE_MODE);
+    if (-1 == output_fileno)
     {
         perror(argv[0]);
         return 5;
@@ -43,9 +43,9 @@ int main(int argc, const char* const* argv)
     for (int i = 0; i < byte_count; i++)
     {
         if (do_lseek)
-            lseek(fileno, 0, SEEK_END);
+            lseek(output_fileno, 0, SEEK_END);
 
-        if (-1 == write(fileno, "x", 1))
+        if (-1 == write(output_fileno, "x", 1))
         {
             perror(argv[0]);
             return 4;

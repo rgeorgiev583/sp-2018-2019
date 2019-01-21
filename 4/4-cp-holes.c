@@ -28,10 +28,10 @@ int main(int argc, const char* const* argv)
 
     char buffer;
     size_t hole_size = 0;
-    ssize_t read_result;
-    while ((read_result = read(input_fileno, &buffer, 1)) != 0)
+    ssize_t read_count;
+    while ((read_count = read(input_fileno, &buffer, 1)) != 0)
     {
-        if (-1 == read_result)
+        if (-1 == read_count)
         {
             perror(argv[0]);
             return 3;

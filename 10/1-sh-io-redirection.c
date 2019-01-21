@@ -77,70 +77,70 @@ int main(int argc, const char* const* argv)
     while (1)
     {
         write(1, "$ ", 2);
-        char command[BUFFER_SIZE];
-        ssize_t command_len = read(0, command, BUFFER_SIZE);
-        if (-1 == command_len)
+        char command_buffer[BUFFER_SIZE];
+        ssize_t command_length = read(0, command_buffer, BUFFER_SIZE);
+        if (-1 == command_length)
         {
             perror(argv[0]);
             return 3;
         }
 
-        command[command_len - 1] = '\0';
+        command_buffer[command_length - 1] = '\0';
 
         char* command_argv[MAX_ARG_COUNT];
-        command_argv[0] = strtok(command, " ");
-        int arg_count = 0;
+        command_argv[0] = strtok(command_buffer, " ");
+        int command_argc = 0;
         do
         {
-            arg_count++;
-            command_argv[arg_count] = strtok(NULL, " ");
+            command_argc++;
+            command_argv[command_argc] = strtok(NULL, " ");
         }
-        while (NULL != command_argv[arg_count]);
+        while (NULL != command_argv[command_argc]);
 
         if (0 == strcmp(command_argv[0], "exit") || 0 == strcmp(command_argv[0], "quit"))
             return 0;
 
-        int op_count = 0, op_types[MAX_ARG_COUNT], next_subcommand_argv_positions[MAX_ARG_COUNT];
+        int operator_count = 0, operator_types[MAX_ARG_COUNT], next_subcommand_argv_positions[MAX_ARG_COUNT];
         const char* output_filenames[MAX_ARG_COUNT] = {};
         const char* append_filenames[MAX_ARG_COUNT] = {};
         const char* input_filenames[MAX_ARG_COUNT] = {};
-        for (int i = 0; i < arg_count; i++)
+        for (int i = 0; i < command_argc; i++)
         {
             if (0 == strcmp(command_argv[i], "&&"))
             {
-                op_types[op_count] = 1;
-                next_subcommand_argv_positions[op_count] = i + 1;
+                operator_types[operator_count] = 1;
+                next_subcommand_argv_positions[operator_count] = i + 1;
                 command_argv[i] = NULL;
-                op_count++;
+                operator_count++;
             }
             else if (0 == strcmp(command_argv[i], "||"))
             {
-                op_types[op_count] = 2;
-                next_subcommand_argv_positions[op_count] = i + 1;
+                operator_types[operator_count] = 2;
+                next_subcommand_argv_positions[operator_count] = i + 1;
                 command_argv[i] = NULL;
-                op_count++;
+                operator_count++;
             }
             else if (0 == strcmp(command_argv[i], ">"))
             {
-                output_filenames[op_count] = command_argv[i + 1];
+                output_filenames[operator_count] = command_argv[i + 1];
                 command_argv[i] = NULL;
             }
             else if (0 == strcmp(command_argv[i], ">>"))
             {
-                append_filenames[op_count] = command_argv[i + 1];
+                append_filenames[operator_count] = command_argv[i + 1];
                 command_argv[i] = NULL;
             }
             else if (0 == strcmp(command_argv[i], "<"))
             {
-                input_filenames[op_count] = command_argv[i + 1];
+                input_filenames[operator_count] = command_argv[i + 1];
                 command_argv[i] = NULL;
             }
         }
 
         int exit_status = fork_exec(argv[0], command_argv, output_filenames[0], append_filenames[0], input_filenames[0]);
-        for (int i = 0; i < op_count; i++)
+        for (int i = 0; i < operator_count; i++)
         {
-            if ((1 == op_types[i] && 0 != exit_status) || (2 == op_types[i] && 0 == exit_status))
+            if ((1 == operator_types[i] && 0 != exit_status) || (2 == operator_types[i] && 0 == exit_status))
             break;
 
             int subcommand_argv_position = next_subcommand_argv_positions[i];

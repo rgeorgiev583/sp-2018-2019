@@ -35,48 +35,48 @@ int main(int argc, const char* const* argv)
     while (1)
     {
         write(1, "$ ", 2);
-        char command[BUFFER_SIZE];
-        ssize_t command_len = read(0, command, BUFFER_SIZE);
-        if (-1 == command_len)
+        char command_buffer[BUFFER_SIZE];
+        ssize_t command_length = read(0, command_buffer, BUFFER_SIZE);
+        if (-1 == command_length)
         {
             perror(argv[0]);
             return 3;
         }
 
-        command[command_len - 1] = '\0';
+        command_buffer[command_length - 1] = '\0';
 
         char* command_argv[MAX_ARG_COUNT];
-        command_argv[0] = strtok(command, " ");
-        int arg_count = 0;
+        command_argv[0] = strtok(command_buffer, " ");
+        int command_argc = 0;
         do
         {
-            arg_count++;
-            command_argv[arg_count] = strtok(NULL, " ");
+            command_argc++;
+            command_argv[command_argc] = strtok(NULL, " ");
         }
-        while (NULL != command_argv[arg_count]);
+        while (NULL != command_argv[command_argc]);
 
         if (0 == strcmp(command_argv[0], "exit") || 0 == strcmp(command_argv[0], "quit"))
             return 0;
 
-        int op_type = 0, next_subcommand_argv_position = -1;
-        for (int i = 0; i < arg_count; i++)
+        int operator_type = 0, next_subcommand_argv_position = -1;
+        for (int i = 0; i < command_argc; i++)
         {
             if (0 == strcmp(command_argv[i], "&&"))
             {
-                op_type = 1;
+                operator_type = 1;
                 next_subcommand_argv_position = i + 1;
                 command_argv[i] = NULL;
             }
             else if (0 == strcmp(command_argv[i], "||"))
             {
-                op_type = 2;
+                operator_type = 2;
                 next_subcommand_argv_position = i + 1;
                 command_argv[i] = NULL;
             }
         }
 
         int exit_status = fork_exec(command_argv[0], command_argv);
-        if ((1 == op_type && 0 != exit_status) || (2 == op_type && 0 == exit_status))
+        if ((1 == operator_type && 0 != exit_status) || (2 == operator_type && 0 == exit_status))
             continue;
 
         fork_exec(argv[0], (char* const*)command_argv + next_subcommand_argv_position);

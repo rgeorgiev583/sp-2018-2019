@@ -12,26 +12,26 @@ int main(int argc, const char* const* argv)
     if (argc < REQUIRED_ARG_COUNT + 1)
         return 1;
 
-    int fileno = creat(argv[1], DEFAULT_FILE_MODE);
-    if (-1 == fileno)
+    int output_fileno = creat(argv[1], DEFAULT_FILE_MODE);
+    if (-1 == output_fileno)
     {
         perror(argv[0]);
         return 5;
     }
 
-    dup2(fileno, STDOUT_FILENO);
+    dup2(output_fileno, STDOUT_FILENO);
 
     char buffer[BUFFER_SIZE];
-    size_t count;
-    while ((count = read(STDIN_FILENO, buffer, BUFFER_SIZE)) > 0)
+    size_t read_count;
+    while ((read_count = read(STDIN_FILENO, buffer, BUFFER_SIZE)) > 0)
     {
-        if (-1 == count)
+        if (-1 == read_count)
         {
             perror(argv[0]);
             return 3;
         }
 
-        write(STDOUT_FILENO, &buffer, count);
+        write(STDOUT_FILENO, &buffer, read_count);
     }
 
     return 0;

@@ -12,7 +12,7 @@ int main(int argc, const char* const* argv)
         if (-1 == count)
         {
             perror(argv[0]);
-            return 1;
+            return 3;
         }
 
         write(STDOUT_FILENO, buffer, count);

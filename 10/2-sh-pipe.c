@@ -13,26 +13,19 @@ int fork_exec(const char* program_name, char* const* command_argv)
     if (-1 == pid)
     {
         perror(program_name);
-        exit(2);
+        exit(9);
     }
     else if (0 == pid && -1 == execvp(command_argv[0], command_argv))
     {
         fprintf(stderr, "%s: error: command `%s` does not exist\n", program_name, command_argv[0]);
-        exit(3);
+        exit(8);
     }
 
     int status;
-    if (-1 == wait(&status))
-    {
-        perror(program_name);
-        exit(4);
-    }
-    else
-    {
-        int exit_status = WEXITSTATUS(status);
-        if (0 != exit_status)
-            fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", program_name, command_argv[0], pid, exit_status);
-    }
+    wait(&status);
+    int exit_status = WEXITSTATUS(status);
+    if (0 != exit_status)
+        fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", program_name, command_argv[0], pid, exit_status);
 
     return WEXITSTATUS(status);
 }
@@ -43,33 +36,24 @@ int fork_exec_pipe(const char* program_name, char* const* input_command_argv, ch
     if (-1 == pipe(pipe_fileno))
     {
         perror(program_name);
-        exit(1);
+        exit(12);
     }
 
     pid_t input_command_pid = fork();
     if (-1 == input_command_pid)
     {
         perror(program_name);
-        exit(2);
+        exit(9);
     }
     else if (0 == input_command_pid)
     {
-        if (-1 == close(pipe_fileno[0]))
-        {
-            perror(program_name);
-            exit(3);
-        }
-
-        if (-1 == dup2(pipe_fileno[1], STDOUT_FILENO))
-        {
-            perror(program_name);
-            exit(4);
-        }
+        close(pipe_fileno[0]);
+        dup2(pipe_fileno[1], STDOUT_FILENO);
 
         if (-1 == execvp(input_command_argv[0], input_command_argv))
         {
             fprintf(stderr, "%s: error: command `%s` does not exist\n", program_name, input_command_argv[0]);
-            exit(5);
+            exit(8);
         }
     }
 
@@ -77,47 +61,27 @@ int fork_exec_pipe(const char* program_name, char* const* input_command_argv, ch
     if (-1 == output_command_pid)
     {
         perror(program_name);
-        exit(2);
+        exit(9);
     }
     else if (0 == output_command_pid)
     {
-        if (-1 == dup2(pipe_fileno[0], STDIN_FILENO))
-        {
-            perror(program_name);
-            exit(4);
-        }
-
-        if (-1 == close(pipe_fileno[1]))
-        {
-            perror(program_name);
-            exit(3);
-        }
+        dup2(pipe_fileno[0], STDIN_FILENO);
+        close(pipe_fileno[1]);
 
         if (-1 == execvp(output_command_argv[0], output_command_argv))
         {
             fprintf(stderr, "%s: error: command `%s` does not exist\n", program_name, output_command_argv[0]);
-            exit(5);
+            exit(8);
         }
     }
 
-    if (-1 == close(pipe_fileno[0]))
-    {
-        perror(program_name);
-        return 3;
-    }
-
-    if (-1 == close(pipe_fileno[1]))
-    {
-        perror(program_name);
-        return 3;
-    }
+    close(pipe_fileno[0]);
+    close(pipe_fileno[1]);
 
     waitpid(input_command_pid, NULL, 0);
 
     int status;
-    if (-1 == waitpid(output_command_pid, &status, 0))
-        perror(program_name);
-
+    waitpid(output_command_pid, &status, 0);
     int exit_status = WEXITSTATUS(status);
     if (0 != exit_status)
         fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", program_name, output_command_argv[0], output_command_pid, exit_status);
@@ -135,7 +99,7 @@ int main(int argc, const char* const* argv)
         if (-1 == command_len)
         {
             perror(argv[0]);
-            return 1;
+            return 3;
         }
 
         command[command_len - 1] = '\0';

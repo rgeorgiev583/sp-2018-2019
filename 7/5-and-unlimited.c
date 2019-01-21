@@ -11,23 +11,18 @@ int fork_exec(const char* program_name, const char* command_name)
     {
     case -1:
         perror(program_name);
-        exit(1);
+        exit(9);
 
     case 0:
         if (-1 == execlp(command_name, command_name, NULL))
         {
             perror(program_name);
-            exit(2);
+            exit(8);
         }
     }
 
     int status;
-    if (-1 == wait(&status))
-    {
-        perror(program_name);
-        exit(3);
-    }
-
+    wait(&status);
     return WEXITSTATUS(status);
 }
 

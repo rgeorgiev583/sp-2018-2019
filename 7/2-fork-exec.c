@@ -14,23 +14,18 @@ int main(int argc, char* const* argv)
     {
     case -1:
         perror(argv[0]);
-        return 2;
+        return 9;
 
     case 0:
         if (-1 == execvp(argv[1], argv + 1))
         {
             perror(argv[0]);
-            return 3;
+            return 8;
         }
     }
 
     int status;
-    if (-1 == wait(&status))
-    {
-        perror(argv[0]);
-        return 4;
-    }
-
+    wait(&status);
     printf("\n%d\n", WEXITSTATUS(status));
     return 0;
 }

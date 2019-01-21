@@ -1,7 +1,6 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdio.h>
-#include <stdbool.h>
 
 #define NEWLINE_CHARACTER '\n'
 
@@ -13,16 +12,40 @@ int main(int argc, const char* const* argv)
         return 1;
 
     int fileno1 = open(argv[1], O_RDONLY);
+    if (-1 == fileno1)
+    {
+        perror(argv[0]);
+        return 5;
+    }
+
     int fileno2 = open(argv[2], O_RDONLY);
+    if (-1 == fileno2)
+    {
+        perror(argv[0]);
+        return 5;
+    }
+
     char buffer1, buffer2;
     size_t current_byte = 0;
     size_t current_line = 0;
-    bool is_eof1 = false, is_eof2 = false;
+    ssize_t read_result1, read_result2;
     do
     {
-        is_eof1 = read(fileno1, &buffer1, 1) <= 0;
-        is_eof2 = read(fileno2, &buffer2, 1) <= 0;
-        if (is_eof1 || is_eof2)
+        read_result1 = read(fileno1, &buffer1, 1);
+        if (-1 == read_result1)
+        {
+            perror(argv[0]);
+            return 3;
+        }
+
+        read_result2 = read(fileno2, &buffer2, 1);
+        if (-1 == read_result2)
+        {
+            perror(argv[0]);
+            return 3;
+        }
+
+        if (0 == read_result1 || 0 == read_result2)
             break;
 
         current_byte++;
@@ -31,10 +54,8 @@ int main(int argc, const char* const* argv)
     }
     while (buffer1 == buffer2);
 
-    if (!is_eof1 || !is_eof2)
-    {
-        printf("%s %s differ: byte %u, line %u\n", argv[1], argv[2], current_byte, current_line);
-    }
+    if (0 != read_result1 || 0 != read_result2)
+        printf("%s %s differ: byte %lu, line %lu\n", argv[1], argv[2], current_byte, current_line);
 
     return 0;
 }

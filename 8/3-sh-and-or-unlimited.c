@@ -13,26 +13,19 @@ int fork_exec(const char* program_name, char* const* command_argv)
     if (-1 == pid)
     {
         perror(program_name);
-        exit(2);
+        exit(9);
     }
     else if (0 == pid && -1 == execvp(command_argv[0], command_argv))
     {
         fprintf(stderr, "%s: error: command `%s` does not exist\n", program_name, command_argv[0]);
-        exit(3);
+        exit(8);
     }
 
     int status;
-    if (-1 == wait(&status))
-    {
-        perror(program_name);
-        exit(4);
-    }
-    else
-    {
-        int exit_status = WEXITSTATUS(status);
-        if (0 != exit_status)
-            fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", program_name, command_argv[0], pid, exit_status);
-    }
+    wait(&status);
+    int exit_status = WEXITSTATUS(status);
+    if (0 != exit_status)
+        fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", program_name, command_argv[0], pid, exit_status);
 
     return WEXITSTATUS(status);
 }
@@ -47,7 +40,7 @@ int main(int argc, const char* const* argv)
         if (-1 == command_len)
         {
             perror(argv[0]);
-            return 1;
+            return 3;
         }
 
         command[command_len - 1] = '\0';

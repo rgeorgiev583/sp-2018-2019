@@ -9,19 +9,14 @@ int main(int argc, const char* const* argv)
     {
     case -1:
         perror(argv[0]);
-        return 1;
+        return 9;
 
     case 0:
         return 0;
     }
 
     int status;
-    if (-1 == wait(&status))
-    {
-        perror(argv[0]);
-        return 2;
-    }
-
+    wait(&status);
     printf("%d\n", pid);
     printf("%d\n", WEXITSTATUS(status));
     return 0;

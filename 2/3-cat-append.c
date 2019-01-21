@@ -17,7 +17,7 @@ int main(int argc, const char* const* argv)
     if (-1 == output_fileno)
     {
         perror(argv[0]);
-        return 2;
+        return 5;
     }
 
     char buffer[BUFFER_SIZE];
@@ -30,7 +30,11 @@ int main(int argc, const char* const* argv)
             return 3;
         }
 
-        write(output_fileno, buffer, count);
+        if (-1 == write(output_fileno, buffer, count))
+        {
+            perror(argv[0]);
+            return 4;
+        }
     }
 
     return 0;

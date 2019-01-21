@@ -18,7 +18,7 @@ int main(int argc, char const* const* argv)
             if (-1 == open(argv[i], O_RDONLY))
             {
                 perror(argv[0]);
-                return 1;
+                return 5;
             }
         }
 
@@ -29,7 +29,7 @@ int main(int argc, char const* const* argv)
                 if (-1 == count)
                 {
                     perror(argv[0]);
-                    return 2;
+                    return 3;
                 }
 
                 write(STDOUT_FILENO, buffer, count);
@@ -43,7 +43,7 @@ int main(int argc, char const* const* argv)
             if (-1 == count)
             {
                 perror(argv[0]);
-                return 2;
+                return 3;
             }
 
             write(STDOUT_FILENO, buffer, count);

@@ -14,20 +14,43 @@ int main(int argc, const char* const* argv)
         return 1;
 
     if (strlen(argv[3]) > 1)
-        return 1;
+        return 2;
 
     int from_position = atoi(argv[1]);
-    int to_position = atoi(argv[2]);
-    int fileno = open(argv[4], O_WRONLY, DEFAULT_FILE_MODE);
-    if (fileno < 0)
+    if (from_position < 0)
     {
-        perror("could not open file for writing");
+        perror(argv[0]);
         return 2;
     }
 
-    lseek(fileno, from_position, from_position >= 0 ? SEEK_SET : SEEK_END);
+    int to_position = atoi(argv[2]);
+    if (to_position < 0)
+    {
+        perror(argv[0]);
+        return 2;
+    }
+
+    int fileno = open(argv[4], O_WRONLY, DEFAULT_FILE_MODE);
+    if (fileno < 0)
+    {
+        perror(argv[0]);
+        return 5;
+    }
+
+    if (-1 == lseek(fileno, from_position, from_position >= 0 ? SEEK_SET : SEEK_END))
+    {
+        perror(argv[0]);
+        return 6;
+    }
+
     for (size_t i = from_position; i <= to_position; i++)
-        write(fileno, argv[3], 1);
+    {
+        if (-1 == write(fileno, argv[3], 1))
+        {
+            perror(argv[0]);
+            return 4;
+        }
+    }
 
     return 0;
 }

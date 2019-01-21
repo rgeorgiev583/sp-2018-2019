@@ -21,7 +21,7 @@ int main(int argc, const char* const* argv)
     if (-1 == input_fileno)
     {
         perror(argv[0]);
-        return 3;
+        return 5;
     }
 
     char buffer;
@@ -32,7 +32,7 @@ int main(int argc, const char* const* argv)
         if (-1 == read_result)
         {
             perror(argv[0]);
-            return 4;
+            return 3;
         }
 
         write(STDOUT_FILENO, &buffer, 1);

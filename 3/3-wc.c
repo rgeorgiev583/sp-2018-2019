@@ -3,9 +3,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 
-#define BUFFER_SIZE 1000
 #define MAX_STD_FILENO 2
-#define NEWLINE_CHAR '\n'
 
 #define REQUIRED_ARG_COUNT 0
 
@@ -24,7 +22,7 @@ void wc(const char* program_name, int fileno, size_t* char_count, size_t* line_c
         }
 
         (*char_count)++;
-        if (NEWLINE_CHAR == buffer)
+        if ('\n' == buffer)
             (*line_count)++;
     }
 }

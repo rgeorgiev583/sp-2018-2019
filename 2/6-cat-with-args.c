@@ -2,14 +2,13 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-#define BUFFER_SIZE 1000
 #define MAX_STD_FILENO 2
 
 #define REQUIRED_ARG_COUNT 0
 
 int main(int argc, char const* const* argv)
 {
-    char buffer[BUFFER_SIZE];
+    char buffer[BUFSIZ];
     ssize_t read_count;
     if (argc > REQUIRED_ARG_COUNT + 1)
     {
@@ -24,7 +23,7 @@ int main(int argc, char const* const* argv)
 
         for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
         {
-            while ((read_count = read(MAX_STD_FILENO + i, buffer, BUFFER_SIZE)) != 0)
+            while ((read_count = read(MAX_STD_FILENO + i, buffer, BUFSIZ)) != 0)
             {
                 if (-1 == read_count)
                 {
@@ -38,7 +37,7 @@ int main(int argc, char const* const* argv)
     }
     else
     {
-        while ((read_count = read(STDIN_FILENO, buffer, BUFFER_SIZE)) != 0)
+        while ((read_count = read(STDIN_FILENO, buffer, BUFSIZ)) != 0)
         {
             if (-1 == read_count)
             {

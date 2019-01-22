@@ -4,10 +4,7 @@
 #include <stdio.h>
 #include <stdbool.h>
 
-#define BUFFER_SIZE 1000
 #define MAX_STD_FILENO 2
-#define NEWLINE_CHAR '\n'
-#define STRING_TERMINATOR '\0'
 
 #define REQUIRED_ARG_COUNT 1
 #define MAX_LINE_LENGTH 80
@@ -15,7 +12,7 @@
 void fgrep(const char* program_name, int fileno, const char* pattern)
 {
     size_t pattern_length = 0;
-    while (STRING_TERMINATOR != pattern[pattern_length])
+    while ('\0' != pattern[pattern_length])
         pattern_length++;
 
     bool is_not_eof = true;
@@ -24,7 +21,7 @@ void fgrep(const char* program_name, int fileno, const char* pattern)
         char buffer[MAX_LINE_LENGTH];
         size_t current_line_length = 0;
         ssize_t read_count;
-        while (current_line_length < MAX_LINE_LENGTH && (is_not_eof = read(fileno, &buffer[current_line_length], 1) > 0) && NEWLINE_CHAR != buffer[current_line_length])
+        while (current_line_length < MAX_LINE_LENGTH && (is_not_eof = read(fileno, &buffer[current_line_length], 1) > 0) && '\n' != buffer[current_line_length])
         {
             if (-1 == read_count)
             {

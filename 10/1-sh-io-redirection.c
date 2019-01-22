@@ -7,7 +7,6 @@
 
 #define DEFAULT_FILE_MODE 0644
 #define APPEND_FILE_FLAGS O_WRONLY | O_CREAT | O_APPEND
-#define BUFFER_SIZE 1000
 #define MAX_ARG_COUNT 100
 
 int fork_exec(const char* program_name, char* const* command_argv, const char* output_filename, const char* append_filename, const char* input_filename)
@@ -77,8 +76,8 @@ int main(int argc, const char* const* argv)
     while (1)
     {
         write(1, "$ ", 2);
-        char command_buffer[BUFFER_SIZE];
-        ssize_t command_length = read(0, command_buffer, BUFFER_SIZE);
+        char command_buffer[BUFSIZ];
+        ssize_t command_length = read(0, command_buffer, BUFSIZ);
         if (-1 == command_length)
         {
             perror(argv[0]);

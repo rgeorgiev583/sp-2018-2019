@@ -3,7 +3,6 @@
 #include <stdio.h>
 
 #define DEFAULT_FILE_MODE 0644
-#define ZERO_CHAR '\0'
 
 #define REQUIRED_ARG_COUNT 2
 
@@ -37,7 +36,7 @@ int main(int argc, const char* const* argv)
             return 3;
         }
 
-        if (ZERO_CHAR == buffer)
+        if ('\0' == buffer)
             hole_size++;
         else
         {

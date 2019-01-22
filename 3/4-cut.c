@@ -3,9 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define BUFFER_SIZE 1000
 #define MAX_STD_FILENO 2
-#define NEWLINE_CHAR '\n'
 
 #define REQUIRED_ARG_COUNT 2
 
@@ -22,7 +20,7 @@ void cut(const char* program_name, int fileno, size_t from_position_in_line, siz
             exit(3);
         }
 
-        if (NEWLINE_CHAR == buffer)
+        if ('\n' == buffer)
         {
             current_position_in_line = 0;
             write(STDOUT_FILENO, &buffer, 1);

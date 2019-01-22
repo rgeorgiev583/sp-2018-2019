@@ -2,7 +2,6 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-#define BUFFER_SIZE 1000
 
 #define REQUIRED_ARG_COUNT 1
 
@@ -20,9 +19,9 @@ int main(int argc, const char* const* argv)
 
     dup2(input_fileno, STDIN_FILENO);
 
-    char buffer[BUFFER_SIZE];
+    char buffer[BUFSIZ];
     size_t read_count;
-    while ((read_count = read(STDIN_FILENO, buffer, BUFFER_SIZE)) > 0)
+    while ((read_count = read(STDIN_FILENO, buffer, BUFSIZ)) > 0)
     {
         if (-1 == read_count)
         {

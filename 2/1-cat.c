@@ -1,13 +1,11 @@
 #include <unistd.h>
 #include <stdio.h>
 
-#define BUFFER_SIZE 1000
-
 int main(int argc, const char* const* argv)
 {
-    char buffer[BUFFER_SIZE];
+    char buffer[BUFSIZ];
     ssize_t read_count;
-    while ((read_count = read(STDIN_FILENO, buffer, BUFFER_SIZE)) != 0)
+    while ((read_count = read(STDIN_FILENO, buffer, BUFSIZ)) != 0)
     {
         if (-1 == read_count)
         {

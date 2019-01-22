@@ -3,9 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define BUFFER_SIZE 1000
 #define MAX_STD_FILENO 2
-#define NEWLINE_CHAR '\n'
 
 #define REQUIRED_ARG_COUNT 1
 
@@ -22,7 +20,7 @@ void head(const char* program_name, const int fileno, size_t total_line_count)
             exit(3);
         }
 
-        if (NEWLINE_CHAR == buffer)
+        if ('\n' == buffer)
             current_line_count++;
         write(STDOUT_FILENO, &buffer, 1);
     }

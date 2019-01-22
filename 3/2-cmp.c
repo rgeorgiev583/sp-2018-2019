@@ -2,7 +2,6 @@
 #include <fcntl.h>
 #include <stdio.h>
 
-#define NEWLINE_CHAR '\n'
 
 #define REQUIRED_ARG_COUNT 2
 
@@ -49,7 +48,7 @@ int main(int argc, const char* const* argv)
             break;
 
         current_char_position++;
-        if (NEWLINE_CHAR == buffer1)
+        if ('\n' == buffer1)
             current_line_position++;
     }
     while (buffer1 == buffer2);

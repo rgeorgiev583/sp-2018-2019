@@ -6,7 +6,6 @@
 #include <string.h>
 
 #define DEFAULT_FILE_MODE 0644
-#define APPEND_FILE_FLAGS O_WRONLY | O_CREAT | O_APPEND
 #define MAX_ARG_COUNT 100
 
 static const char* argv0;
@@ -35,7 +34,7 @@ int fork_exec(char* const* command_argv, const char* output_filename, const char
 
         if (NULL != append_filename)
         {
-            int append_fileno = open(output_filename, APPEND_FILE_FLAGS, DEFAULT_FILE_MODE);
+            int append_fileno = open(output_filename, O_WRONLY | O_CREAT | O_APPEND, DEFAULT_FILE_MODE);
             if (-1 == append_fileno)
             {
                 perror("open");

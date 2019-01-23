@@ -4,7 +4,6 @@
 #include <stdio.h>
 
 #define DEFAULT_FILE_MODE 0644
-#define APPEND_FILE_FLAGS O_WRONLY | O_CREAT | O_APPEND
 
 #define REQUIRED_ARG_COUNT 1
 
@@ -13,7 +12,7 @@ int main(int argc, const char* const* argv)
     if (argc < REQUIRED_ARG_COUNT + 1)
         exit(1);
 
-    int output_fileno = open(argv[1], APPEND_FILE_FLAGS, DEFAULT_FILE_MODE);
+    int output_fileno = open(argv[1], O_WRONLY | O_CREAT | O_APPEND, DEFAULT_FILE_MODE);
     if (-1 == output_fileno)
     {
         perror("open");

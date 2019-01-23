@@ -5,8 +5,6 @@
 
 #define MAX_STD_FILENO 2
 
-#define REQUIRED_ARG_COUNT 0
-
 void cat(int input_fileno)
 {
     char buffer[BUFSIZ];
@@ -25,9 +23,9 @@ void cat(int input_fileno)
 
 int main(int argc, char const* const* argv)
 {
-    if (argc > REQUIRED_ARG_COUNT + 1)
+    if (argc > 1)
     {
-        for (int i = REQUIRED_ARG_COUNT + 1; i < argc; i++)
+        for (int i = 1; i < argc; i++)
         {
             if (-1 == open(argv[i], O_RDONLY))
             {
@@ -36,7 +34,7 @@ int main(int argc, char const* const* argv)
             }
         }
 
-        for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
+        for (int i = 1; i < argc; i++)
             cat(MAX_STD_FILENO + i);
     }
     else

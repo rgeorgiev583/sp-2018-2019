@@ -5,8 +5,6 @@
 
 #define MAX_STD_FILENO 2
 
-#define REQUIRED_ARG_COUNT 0
-
 void wc(int fileno, size_t* char_count, size_t* line_count)
 {
     char buffer;
@@ -31,9 +29,9 @@ int main(int argc, char const* const* argv)
 {
     size_t total_char_count = 0, total_line_count = 0;
 
-    if (argc > REQUIRED_ARG_COUNT + 1)
+    if (argc > 1)
     {
-        for (int i = REQUIRED_ARG_COUNT + 1; i < argc; i++)
+        for (int i = 1; i < argc; i++)
         {
             if (-1 == open(argv[i], O_RDONLY))
             {
@@ -42,11 +40,11 @@ int main(int argc, char const* const* argv)
             }
         }
 
-        for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
+        for (int i = 1; i < argc; i++)
         {
             size_t char_count, line_count;
             wc(MAX_STD_FILENO + i, &char_count, &line_count);
-            printf(" %u %u %s\n", line_count, char_count, argv[REQUIRED_ARG_COUNT + i]);
+            printf(" %u %u %s\n", line_count, char_count, argv[i]);
             total_char_count += char_count;
             total_line_count += line_count;
         }

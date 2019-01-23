@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <sys/wait.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 int main(int argc, const char* const* argv)
@@ -9,7 +10,7 @@ int main(int argc, const char* const* argv)
     {
     case -1:
         perror(argv[0]);
-        return 9;
+        exit(9);
 
     case 0:
         return 0;

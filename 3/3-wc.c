@@ -1,7 +1,7 @@
 #include <unistd.h>
 #include <fcntl.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #define MAX_STD_FILENO 2
 

@@ -1,9 +1,9 @@
 #include <unistd.h>
-#include <sys/wait.h>
 #include <fcntl.h>
-#include <string.h>
-#include <stdio.h>
+#include <sys/wait.h>
 #include <stdlib.h>
+#include <stdio.h>
+#include <string.h>
 
 #define DEFAULT_FILE_MODE 0644
 #define APPEND_FILE_FLAGS O_WRONLY | O_CREAT | O_APPEND

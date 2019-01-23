@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <sys/wait.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 #define MAX_ARG_COUNT 100
@@ -14,7 +15,7 @@ int main(int argc, const char** argv)
         if (i < argc - 1 && -1 == pipe(pipe_fileno[i - 1]))
         {
             perror(argv[0]);
-            return 12;
+            exit(12);
         }
 
         pid[i - 1] = fork();
@@ -22,7 +23,7 @@ int main(int argc, const char** argv)
         {
         case -1:
             perror(argv[0]);
-            return 9;
+            exit(9);
 
         case 0:
             for (int j = 1; j < i - 1; j++)
@@ -46,7 +47,7 @@ int main(int argc, const char** argv)
             if (-1 == execlp(argv[i], argv[i], NULL))
             {
                 perror(argv[0]);
-                return 8;
+                exit(8);
             }
         }
     }

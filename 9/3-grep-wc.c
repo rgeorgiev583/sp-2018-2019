@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <sys/wait.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 int main(int argc, const char** argv)
@@ -8,7 +9,7 @@ int main(int argc, const char** argv)
     if (-1 == pipe(pipe_fileno))
     {
         perror(argv[0]);
-        return 12;
+        exit(12);
     }
 
     pid_t who_pid = fork();
@@ -16,7 +17,7 @@ int main(int argc, const char** argv)
     {
     case -1:
         perror(argv[0]);
-        return 9;
+        exit(9);
 
     case 0:
         close(pipe_fileno[0]);
@@ -26,7 +27,7 @@ int main(int argc, const char** argv)
         if (-1 == execvp("grep", (char* const*)argv))
         {
             perror(argv[0]);
-            return 8;
+            exit(8);
         }
     }
 
@@ -35,7 +36,7 @@ int main(int argc, const char** argv)
     {
     case -1:
         perror(argv[0]);
-        return 9;
+        exit(9);
 
     case 0:
         dup2(pipe_fileno[0], STDIN_FILENO);
@@ -44,7 +45,7 @@ int main(int argc, const char** argv)
         if (-1 == execlp("wc", "wc", "-l", NULL))
         {
             perror(argv[0]);
-            return 8;
+            exit(8);
         }
     }
 

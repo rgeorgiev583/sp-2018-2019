@@ -1,7 +1,8 @@
 #include <unistd.h>
 #include <sys/wait.h>
-#include <string.h>
+#include <stdlib.h>
 #include <stdio.h>
+#include <string.h>
 
 #define MAX_ARG_COUNT 100
 
@@ -15,7 +16,7 @@ int main(int argc, const char* const* argv)
         if (-1 == command_length)
         {
             perror(argv[0]);
-            return 3;
+            exit(3);
         }
 
         command_buffer[command_length - 1] = '\0';
@@ -31,18 +32,18 @@ int main(int argc, const char* const* argv)
         while (NULL != command_argv[command_argc]);
 
         if (0 == strcmp(command_argv[0], "exit") || 0 == strcmp(command_argv[0], "quit"))
-            return 0;
+            exit(0);
 
         pid_t pid = fork();
         if (-1 == pid)
         {
             perror(argv[0]);
-            return 9;
+            exit(9);
         }
         else if (0 == pid && -1 == execvp(command_argv[0], command_argv))
         {
             fprintf(stderr, "%s: error: command `%s` does not exist\n", argv[0], command_argv[0]);
-            return 8;
+            exit(8);
         }
         else
         {

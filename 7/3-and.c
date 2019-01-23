@@ -1,8 +1,7 @@
 #include <unistd.h>
-#include <sys/types.h>
 #include <sys/wait.h>
-#include <stdio.h>
 #include <stdlib.h>
+#include <stdio.h>
 
 #define REQUIRED_ARG_COUNT 2
 
@@ -31,7 +30,7 @@ int fork_exec(const char* program_name, const char* command_name)
 int main(int argc, const char* const* argv)
 {
     if (argc < REQUIRED_ARG_COUNT + 1)
-        return 1;
+        exit(1);
 
     int exit_status = fork_exec(argv[0], argv[1]);
     if (0 != exit_status)

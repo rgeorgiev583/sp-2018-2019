@@ -7,10 +7,24 @@
 
 #define REQUIRED_ARG_COUNT 0
 
-int main(int argc, char const* const* argv)
+void cat(int input_fileno)
 {
     char buffer[BUFSIZ];
     ssize_t read_count;
+    while ((read_count = read(input_fileno, buffer, BUFSIZ)) != 0)
+    {
+        if (-1 == read_count)
+        {
+            perror("read");
+            exit(3);
+        }
+
+        write(STDOUT_FILENO, buffer, read_count);
+    }
+}
+
+int main(int argc, char const* const* argv)
+{
     if (argc > REQUIRED_ARG_COUNT + 1)
     {
         for (int i = REQUIRED_ARG_COUNT + 1; i < argc; i++)
@@ -23,32 +37,10 @@ int main(int argc, char const* const* argv)
         }
 
         for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
-        {
-            while ((read_count = read(MAX_STD_FILENO + i, buffer, BUFSIZ)) != 0)
-            {
-                if (-1 == read_count)
-                {
-                    perror("read");
-                    exit(3);
-                }
-
-                write(STDOUT_FILENO, buffer, read_count);
-            }
-        }
+            cat(MAX_STD_FILENO + i);
     }
     else
-    {
-        while ((read_count = read(STDIN_FILENO, buffer, BUFSIZ)) != 0)
-        {
-            if (-1 == read_count)
-            {
-                perror("read");
-                exit(3);
-            }
-
-            write(STDOUT_FILENO, buffer, read_count);
-        }
-    }
+        cat(STDIN_FILENO);
 
     return 0;
 }

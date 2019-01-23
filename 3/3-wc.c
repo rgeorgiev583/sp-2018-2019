@@ -7,7 +7,7 @@
 
 #define REQUIRED_ARG_COUNT 0
 
-void wc(const char* program_name, int fileno, size_t* char_count, size_t* line_count)
+void wc(int fileno, size_t* char_count, size_t* line_count)
 {
     char buffer;
     *char_count = 0;
@@ -45,7 +45,7 @@ int main(int argc, char const* const* argv)
         for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
         {
             size_t char_count, line_count;
-            wc(argv[0], MAX_STD_FILENO + i, &char_count, &line_count);
+            wc(MAX_STD_FILENO + i, &char_count, &line_count);
             printf(" %u %u %s\n", line_count, char_count, argv[REQUIRED_ARG_COUNT + i]);
             total_char_count += char_count;
             total_line_count += line_count;
@@ -54,7 +54,7 @@ int main(int argc, char const* const* argv)
     else
     {
         size_t char_count = 0, line_count = 0;
-        wc(argv[0], STDIN_FILENO, &char_count, &line_count);
+        wc(STDIN_FILENO, &char_count, &line_count);
         printf(" %u %u\n", line_count, char_count);
         total_char_count += char_count;
         total_line_count += line_count;

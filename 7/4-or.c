@@ -5,7 +5,7 @@
 
 #define REQUIRED_ARG_COUNT 2
 
-int fork_exec(const char* program_name, const char* command_name)
+int fork_exec(const char* command_name)
 {
     pid_t pid = fork();
     switch (pid)
@@ -32,10 +32,10 @@ int main(int argc, const char* const* argv)
     if (argc < REQUIRED_ARG_COUNT + 1)
         exit(1);
 
-    int exit_status = fork_exec(argv[0], argv[1]);
+    int exit_status = fork_exec(argv[1]);
     if (0 == exit_status)
         return exit_status;
 
-    exit_status = fork_exec(argv[0], argv[2]);
+    exit_status = fork_exec(argv[2]);
     return exit_status;
 }

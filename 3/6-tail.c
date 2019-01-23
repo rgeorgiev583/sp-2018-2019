@@ -7,7 +7,7 @@
 
 #define REQUIRED_ARG_COUNT 1
 
-void tail(const char* program_name, int fileno, size_t total_line_count)
+void tail(int fileno, size_t total_line_count)
 {
     size_t current_line_count = 0;
     char buffer;
@@ -52,10 +52,10 @@ int main(int argc, char const* const* argv)
         }
 
         for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
-            tail(argv[0], MAX_STD_FILENO + i, total_line_count);
+            tail(MAX_STD_FILENO + i, total_line_count);
     }
     else
-        tail(argv[0], STDIN_FILENO, total_line_count);
+        tail(STDIN_FILENO, total_line_count);
 
     return 0;
 }

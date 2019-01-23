@@ -9,7 +9,7 @@
 #define REQUIRED_ARG_COUNT 1
 #define MAX_LINE_LENGTH 80
 
-void fgrep(const char* program_name, int fileno, const char* pattern)
+void fgrep(int fileno, const char* pattern)
 {
     size_t pattern_length = 0;
     while ('\0' != pattern[pattern_length])
@@ -64,10 +64,10 @@ int main(int argc, char const* const* argv)
             }
 
         for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
-            fgrep(argv[0], MAX_STD_FILENO + i, argv[1]);
+            fgrep(MAX_STD_FILENO + i, argv[1]);
     }
     else
-        fgrep(argv[0], STDIN_FILENO, argv[1]);
+        fgrep(STDIN_FILENO, argv[1]);
 
     return 0;
 }

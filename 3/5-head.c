@@ -7,7 +7,7 @@
 
 #define REQUIRED_ARG_COUNT 1
 
-void head(const char* program_name, const int fileno, size_t total_line_count)
+void head(const int fileno, size_t total_line_count)
 {
     size_t current_line_count = 0;
     char buffer;
@@ -50,10 +50,10 @@ int main(int argc, char const* const* argv)
         }
 
         for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
-            head(argv[0], MAX_STD_FILENO + i, total_line_count);
+            head(MAX_STD_FILENO + i, total_line_count);
     }
     else
-        head(argv[0], STDIN_FILENO, total_line_count);
+        head(STDIN_FILENO, total_line_count);
 
     return 0;
 }

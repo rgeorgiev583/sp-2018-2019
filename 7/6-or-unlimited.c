@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int fork_exec(const char* program_name, const char* command_name)
+int fork_exec(const char* command_name)
 {
     pid_t pid = fork();
     switch (pid)
@@ -30,7 +30,7 @@ int main(int argc, const char* const* argv)
     int exit_status = 1;
     for (int i = 1; i < argc; i++)
     {
-        exit_status = fork_exec(argv[0], argv[i]);
+        exit_status = fork_exec(argv[i]);
         if (0 == exit_status)
             return exit_status;
     }

@@ -7,7 +7,7 @@
 
 #define REQUIRED_ARG_COUNT 2
 
-void cut(const char* program_name, int fileno, size_t from_position_in_line, size_t to_position_in_line)
+void cut(int fileno, size_t from_position_in_line, size_t to_position_in_line)
 {
     size_t current_position_in_line = 0;
     char buffer;
@@ -65,10 +65,10 @@ int main(int argc, char const* const* argv)
         }
 
         for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
-            cut(argv[0], MAX_STD_FILENO + i, from_position_in_line, to_position_in_line);
+            cut(MAX_STD_FILENO + i, from_position_in_line, to_position_in_line);
     }
     else
-        cut(argv[0], STDIN_FILENO, from_position_in_line, to_position_in_line);
+        cut(STDIN_FILENO, from_position_in_line, to_position_in_line);
 
     return 0;
 }

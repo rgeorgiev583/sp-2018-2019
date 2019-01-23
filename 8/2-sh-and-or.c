@@ -74,7 +74,7 @@ int main(int argc, const char* const* argv)
             }
         }
 
-        int exit_status = fork_exec(command_argv[0], command_argv);
+        int exit_status = fork_exec(argv[0], command_argv);
         if ((1 == operator_type && 0 != exit_status) || (2 == operator_type && 0 == exit_status))
             continue;
 

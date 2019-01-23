@@ -9,7 +9,9 @@
 #define APPEND_FILE_FLAGS O_WRONLY | O_CREAT | O_APPEND
 #define MAX_ARG_COUNT 100
 
-int fork_exec(const char* program_name, char* const* command_argv, const char* output_filename, const char* append_filename, const char* input_filename)
+static const char* argv0;
+
+int fork_exec(char* const* command_argv, const char* output_filename, const char* append_filename, const char* input_filename)
 {
     pid_t pid = fork();
     if (-1 == pid)
@@ -57,7 +59,7 @@ int fork_exec(const char* program_name, char* const* command_argv, const char* o
 
         if (-1 == execvp(command_argv[0], command_argv))
         {
-            fprintf(stderr, "%s: error: command `%s` does not exist\n", program_name, command_argv[0]);
+            fprintf(stderr, "%s: error: command `%s` does not exist\n", argv0, command_argv[0]);
             exit(8);
         }
     }
@@ -66,13 +68,15 @@ int fork_exec(const char* program_name, char* const* command_argv, const char* o
     wait(&status);
     int exit_status = WEXITSTATUS(status);
     if (0 != exit_status)
-        fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", program_name, command_argv[0], pid, exit_status);
+        fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", argv0, command_argv[0], pid, exit_status);
 
     return WEXITSTATUS(status);
 }
 
 int main(int argc, const char* const* argv)
 {
+    argv0 = argv[0];
+
     while (1)
     {
         write(1, "$ ", 2);
@@ -136,14 +140,14 @@ int main(int argc, const char* const* argv)
             }
         }
 
-        int exit_status = fork_exec(argv[0], command_argv, output_filenames[0], append_filenames[0], input_filenames[0]);
+        int exit_status = fork_exec(command_argv, output_filenames[0], append_filenames[0], input_filenames[0]);
         for (int i = 0; i < operator_count; i++)
         {
             if ((1 == operator_types[i] && 0 != exit_status) || (2 == operator_types[i] && 0 == exit_status))
             break;
 
             int subcommand_argv_position = next_subcommand_argv_positions[i];
-            exit_status = fork_exec(argv[0], (char* const*)command_argv + subcommand_argv_position, output_filenames[i + 1], append_filenames[i + 1], input_filenames[i + 1]);
+            exit_status = fork_exec((char* const*)command_argv + subcommand_argv_position, output_filenames[i + 1], append_filenames[i + 1], input_filenames[i + 1]);
         }
     }
 

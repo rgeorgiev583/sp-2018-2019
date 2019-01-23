@@ -6,7 +6,9 @@
 
 #define MAX_ARG_COUNT 100
 
-int fork_exec(const char* program_name, char* const* command_argv)
+static const char* argv0;
+
+int fork_exec(char* const* command_argv)
 {
     pid_t pid = fork();
     if (-1 == pid)
@@ -16,7 +18,7 @@ int fork_exec(const char* program_name, char* const* command_argv)
     }
     else if (0 == pid && -1 == execvp(command_argv[0], command_argv))
     {
-        fprintf(stderr, "%s: error: command `%s` does not exist\n", program_name, command_argv[0]);
+        fprintf(stderr, "%s: error: command `%s` does not exist\n", argv0, command_argv[0]);
         exit(8);
     }
 
@@ -24,12 +26,12 @@ int fork_exec(const char* program_name, char* const* command_argv)
     wait(&status);
     int exit_status = WEXITSTATUS(status);
     if (0 != exit_status)
-        fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", program_name, command_argv[0], pid, exit_status);
+        fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", argv0, command_argv[0], pid, exit_status);
 
     return WEXITSTATUS(status);
 }
 
-void sh(const char* program_name, FILE* input_file)
+void sh(FILE* input_file)
 {
     while (1)
     {
@@ -86,7 +88,7 @@ void sh(const char* program_name, FILE* input_file)
                 break;
 
             int subcommand_argv_position = subcommand_argv_positions[i];
-            exit_status = fork_exec(program_name, (char* const*)command_argv + subcommand_argv_position);
+            exit_status = fork_exec((char* const*)command_argv + subcommand_argv_position);
         }
 
         free(command_buffer);
@@ -98,6 +100,8 @@ void sh(const char* program_name, FILE* input_file)
 
 int main(int argc, const char* const* argv)
 {
+    argv0 = argv[0];
+
     if (argc > 1)
     {
         for (int i = 1; i < argc; i++)
@@ -109,11 +113,11 @@ int main(int argc, const char* const* argv)
                 exit(2);
             }
 
-            sh(argv[0], input_file);
+            sh(input_file);
         }
     }
     else
-        sh(argv[0], stdin);
+        sh(stdin);
 
     return 0;
 }

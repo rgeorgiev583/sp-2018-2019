@@ -25,7 +25,7 @@ void fgrep(const char* program_name, int fileno, const char* pattern)
         {
             if (-1 == read_count)
             {
-                perror(program_name);
+                perror("read");
                 exit(3);
             }
 
@@ -59,7 +59,7 @@ int main(int argc, char const* const* argv)
         for (int i = REQUIRED_ARG_COUNT + 1; i < argc; i++)
             if (-1 == open(argv[i], O_RDONLY))
             {
-                perror(argv[0]);
+                perror("open");
                 exit(5);
             }
 

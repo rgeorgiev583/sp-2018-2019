@@ -6,7 +6,7 @@ int main(int argc, char* const* argv)
 {
     if (-1 == execvp("cat", argv))
     {
-        perror(argv[0]);
+        perror("exec");
         exit(8);
     }
 

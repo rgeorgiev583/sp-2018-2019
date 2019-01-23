@@ -11,7 +11,7 @@ int fork_exec(const char* program_name, char* const* command_argv)
     pid_t pid = fork();
     if (-1 == pid)
     {
-        perror(program_name);
+        perror("fork");
         exit(9);
     }
     else if (0 == pid && -1 == execvp(command_argv[0], command_argv))
@@ -105,7 +105,7 @@ int main(int argc, const char* const* argv)
             FILE* input_file = fopen(argv[i], "r");
             if (NULL == input_file)
             {
-                perror(argv[0]);
+                perror("fopen");
                 exit(2);
             }
 

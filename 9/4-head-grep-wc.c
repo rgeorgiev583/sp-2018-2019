@@ -13,7 +13,7 @@ int main(int argc, const char** argv)
     int pipe_head_grep_fileno[2];
     if (-1 == pipe(pipe_head_grep_fileno))
     {
-        perror(argv[0]);
+        perror("pipe");
         exit(12);
     }
 
@@ -21,7 +21,7 @@ int main(int argc, const char** argv)
     switch (head_pid)
     {
     case -1:
-        perror(argv[0]);
+        perror("fork");
         exit(9);
 
     case 0:
@@ -33,7 +33,7 @@ int main(int argc, const char** argv)
         argv[1] = "-n";
         if (-1 == execvp("head", (char* const*)argv))
         {
-            perror(argv[0]);
+            perror("exec");
             exit(8);
         }
     }
@@ -41,7 +41,7 @@ int main(int argc, const char** argv)
     int pipe_grep_wc_fileno[2];
     if (-1 == pipe(pipe_grep_wc_fileno))
     {
-        perror(argv[0]);
+        perror("pipe");
         exit(12);
     }
 
@@ -49,7 +49,7 @@ int main(int argc, const char** argv)
     switch (grep_pid)
     {
     case -1:
-        perror(argv[0]);
+        perror("fork");
         exit(9);
 
     case 0:
@@ -60,7 +60,7 @@ int main(int argc, const char** argv)
 
         if (-1 == execlp("grep", "grep", argv[2], NULL))
         {
-            perror(argv[0]);
+            perror("exec");
             exit(8);
         }
     }
@@ -69,7 +69,7 @@ int main(int argc, const char** argv)
     switch (wc_pid)
     {
     case -1:
-        perror(argv[0]);
+        perror("fork");
         exit(9);
 
     case 0:
@@ -80,7 +80,7 @@ int main(int argc, const char** argv)
 
         if (-1 == execlp("wc", "wc", "-l", NULL))
         {
-            perror(argv[0]);
+            perror("exec");
             exit(8);
         }
     }

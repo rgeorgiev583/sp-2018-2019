@@ -15,14 +15,14 @@ int main(int argc, const char* const* argv)
     int input_fileno = open(argv[1], O_RDONLY);
     if (-1 == input_fileno)
     {
-        perror(argv[0]);
+        perror("open");
         exit(5);
     }
 
     int output_fileno = creat(argv[2], DEFAULT_FILE_MODE);
     if (-1 == output_fileno)
     {
-        perror(argv[0]);
+        perror("open");
         exit(5);
     }
 
@@ -33,7 +33,7 @@ int main(int argc, const char* const* argv)
     {
         if (-1 == read_count)
         {
-            perror(argv[0]);
+            perror("read");
             exit(3);
         }
 
@@ -49,7 +49,7 @@ int main(int argc, const char* const* argv)
 
             if (-1 == write(output_fileno, &buffer, 1))
             {
-                perror(argv[0]);
+                perror("write");
                 exit(4);
             }
         }

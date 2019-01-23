@@ -14,13 +14,13 @@ int main(int argc, char* const* argv)
     switch (pid)
     {
     case -1:
-        perror(argv[0]);
+        perror("fork");
         exit(9);
 
     case 0:
         if (-1 == execvp(argv[1], argv + 1))
         {
-            perror(argv[0]);
+            perror("exec");
             exit(8);
         }
     }

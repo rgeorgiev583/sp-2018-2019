@@ -10,13 +10,13 @@ int main(int argc, char* const* argv)
         switch (fork())
         {
         case -1:
-            perror(argv[0]);
+            perror("fork");
             exit(9);
 
         case 0:
             if (-1 == execlp(argv[i], argv[i], NULL))
             {
-                perror(argv[0]);
+                perror("exec");
                 exit(8);
             }
         }

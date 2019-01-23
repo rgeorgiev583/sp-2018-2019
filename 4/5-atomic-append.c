@@ -29,7 +29,7 @@ int main(int argc, const char* const* argv)
     int output_fileno = open(argv[base_arg], flags, DEFAULT_FILE_MODE);
     if (-1 == output_fileno)
     {
-        perror(argv[0]);
+        perror("open");
         exit(5);
     }
 
@@ -47,7 +47,7 @@ int main(int argc, const char* const* argv)
 
         if (-1 == write(output_fileno, "x", 1))
         {
-            perror(argv[0]);
+            perror("write");
             exit(4);
         }
     }

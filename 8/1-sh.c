@@ -15,7 +15,7 @@ int main(int argc, const char* const* argv)
         ssize_t command_length = read(0, command_buffer, BUFSIZ);
         if (-1 == command_length)
         {
-            perror(argv[0]);
+            perror("read");
             exit(3);
         }
 
@@ -37,7 +37,7 @@ int main(int argc, const char* const* argv)
         pid_t pid = fork();
         if (-1 == pid)
         {
-            perror(argv[0]);
+            perror("fork");
             exit(9);
         }
         else if (0 == pid && -1 == execvp(command_argv[0], command_argv))

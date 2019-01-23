@@ -25,19 +25,19 @@ int main(int argc, const char* const* argv)
     int fileno = open(argv[3], O_WRONLY, DEFAULT_FILE_MODE);
     if (-1 == fileno)
     {
-        perror(argv[0]);
+        perror("open");
         exit(5);
     }
 
     if (-1 == lseek(fileno, position, position >= 0 ? SEEK_SET : SEEK_END))
     {
-        perror(argv[0]);
+        perror("lseek");
         exit(6);
     }
 
     if (-1 == write(fileno, argv[2], word_length))
     {
-        perror(argv[0]);
+        perror("write");
         exit(4);
     }
 

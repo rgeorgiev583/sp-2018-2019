@@ -14,7 +14,7 @@ int main(int argc, const char** argv)
     {
         if (i < argc - 1 && -1 == pipe(pipe_fileno[i - 1]))
         {
-            perror(argv[0]);
+            perror("pipe");
             exit(12);
         }
 
@@ -22,7 +22,7 @@ int main(int argc, const char** argv)
         switch (pid[i - 1])
         {
         case -1:
-            perror(argv[0]);
+            perror("fork");
             exit(9);
 
         case 0:
@@ -46,7 +46,7 @@ int main(int argc, const char** argv)
 
             if (-1 == execlp(argv[i], argv[i], NULL))
             {
-                perror(argv[0]);
+                perror("exec");
                 exit(8);
             }
         }

@@ -19,7 +19,7 @@ int main(int argc, char** argv)
 
     if (-1 == execvp("wc", (char* const*)argv))
     {
-        perror(argv[0]);
+        perror("exec");
         exit(8);
     }
 

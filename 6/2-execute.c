@@ -11,7 +11,7 @@ int main(int argc, char* const* argv)
 
     if (-1 == execvp(argv[1], argv + 1))
     {
-        perror(argv[0]);
+        perror("exec");
         exit(8);
     }
 

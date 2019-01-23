@@ -16,7 +16,7 @@ int main(int argc, const char* const* argv)
     int output_fileno = open(argv[1], APPEND_FILE_FLAGS, DEFAULT_FILE_MODE);
     if (-1 == output_fileno)
     {
-        perror(argv[0]);
+        perror("open");
         exit(5);
     }
 
@@ -26,13 +26,13 @@ int main(int argc, const char* const* argv)
     {
         if (-1 == read_count)
         {
-            perror(argv[0]);
+            perror("read");
             exit(3);
         }
 
         if (-1 == write(output_fileno, buffer, read_count))
         {
-            perror(argv[0]);
+            perror("write");
             exit(4);
         }
     }

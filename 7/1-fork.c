@@ -9,7 +9,7 @@ int main(int argc, const char* const* argv)
     switch (pid)
     {
     case -1:
-        perror(argv[0]);
+        perror("fork");
         exit(9);
 
     case 0:

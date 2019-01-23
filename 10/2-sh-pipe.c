@@ -11,7 +11,7 @@ int fork_exec(const char* program_name, char* const* command_argv)
     pid_t pid = fork();
     if (-1 == pid)
     {
-        perror(program_name);
+        perror("fork");
         exit(9);
     }
     else if (0 == pid && -1 == execvp(command_argv[0], command_argv))
@@ -34,14 +34,14 @@ int fork_exec_pipe(const char* program_name, char* const* input_command_argv, ch
     int pipe_fileno[2];
     if (-1 == pipe(pipe_fileno))
     {
-        perror(program_name);
+        perror("pipe");
         exit(12);
     }
 
     pid_t input_command_pid = fork();
     if (-1 == input_command_pid)
     {
-        perror(program_name);
+        perror("fork");
         exit(9);
     }
     else if (0 == input_command_pid)
@@ -59,7 +59,7 @@ int fork_exec_pipe(const char* program_name, char* const* input_command_argv, ch
     pid_t output_command_pid = fork();
     if (-1 == output_command_pid)
     {
-        perror(program_name);
+        perror("fork");
         exit(9);
     }
     else if (0 == output_command_pid)
@@ -97,7 +97,7 @@ int main(int argc, const char* const* argv)
         ssize_t command_length = read(0, command_buffer, BUFSIZ);
         if (-1 == command_length)
         {
-            perror(argv[0]);
+            perror("read");
             exit(3);
         }
 

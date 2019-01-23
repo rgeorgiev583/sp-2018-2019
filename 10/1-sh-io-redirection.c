@@ -14,7 +14,7 @@ int fork_exec(const char* program_name, char* const* command_argv, const char* o
     pid_t pid = fork();
     if (-1 == pid)
     {
-        perror(program_name);
+        perror("fork");
         exit(9);
     }
     else if (0 == pid)
@@ -24,7 +24,7 @@ int fork_exec(const char* program_name, char* const* command_argv, const char* o
             int output_fileno = creat(output_filename, DEFAULT_FILE_MODE);
             if (-1 == output_fileno)
             {
-                perror(program_name);
+                perror("open");
                 exit(5);
             }
 
@@ -36,7 +36,7 @@ int fork_exec(const char* program_name, char* const* command_argv, const char* o
             int append_fileno = open(output_filename, APPEND_FILE_FLAGS, DEFAULT_FILE_MODE);
             if (-1 == append_fileno)
             {
-                perror(program_name);
+                perror("open");
                 exit(5);
             }
 
@@ -48,7 +48,7 @@ int fork_exec(const char* program_name, char* const* command_argv, const char* o
             int input_fileno = open(input_filename, O_RDONLY);
             if (-1 == input_fileno)
             {
-                perror(program_name);
+                perror("open");
                 exit(5);
             }
 
@@ -80,7 +80,7 @@ int main(int argc, const char* const* argv)
         ssize_t command_length = read(0, command_buffer, BUFSIZ);
         if (-1 == command_length)
         {
-            perror(argv[0]);
+            perror("read");
             exit(3);
         }
 

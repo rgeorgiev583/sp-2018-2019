@@ -10,7 +10,7 @@ int main(int argc, const char* const* argv)
     {
         if (-1 == read_count)
         {
-            perror(argv[0]);
+            perror("read");
             exit(3);
         }
 

@@ -11,14 +11,14 @@ int main(int argc, char* const* argv)
     int input_fileno = open(argv[3], O_RDONLY);
     if (-1 == input_fileno)
     {
-        perror(argv[0]);
+        perror("open");
         exit(5);
     }
 
     int output_fileno = creat(argv[4], DEFAULT_FILE_MODE);
     if (-1 == output_fileno)
     {
-        perror(argv[0]);
+        perror("open");
         exit(5);
     }
 
@@ -27,7 +27,7 @@ int main(int argc, char* const* argv)
 
     if (-1 == execlp("tr", "tr", argv[1], argv[2], NULL))
     {
-        perror(argv[0]);
+        perror("exec");
         exit(8);
     }
 

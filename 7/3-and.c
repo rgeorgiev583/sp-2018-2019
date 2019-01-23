@@ -11,13 +11,13 @@ int fork_exec(const char* program_name, const char* command_name)
     switch (pid)
     {
     case -1:
-        perror(program_name);
+        perror("fork");
         exit(9);
 
     case 0:
         if (-1 == execlp(command_name, command_name, NULL))
         {
-            perror(program_name);
+            perror("exec");
             exit(8);
         }
     }

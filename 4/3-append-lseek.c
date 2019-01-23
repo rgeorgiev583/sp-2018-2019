@@ -14,7 +14,7 @@ int main(int argc, const char* const* argv)
     int output_fileno = open(argv[1], O_WRONLY | O_APPEND);
     if (-1 == output_fileno)
     {
-        perror(argv[0]);
+        perror("open");
         exit(5);
     }
 
@@ -22,7 +22,7 @@ int main(int argc, const char* const* argv)
 
     if (-1 == write(output_fileno, argv[2], strlen(argv[2])))
     {
-        perror(argv[0]);
+        perror("write");
         exit(4);
     }
 

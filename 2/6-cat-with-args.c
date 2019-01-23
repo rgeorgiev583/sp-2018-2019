@@ -17,7 +17,7 @@ int main(int argc, char const* const* argv)
         {
             if (-1 == open(argv[i], O_RDONLY))
             {
-                perror(argv[0]);
+                perror("open");
                 exit(5);
             }
         }
@@ -28,7 +28,7 @@ int main(int argc, char const* const* argv)
             {
                 if (-1 == read_count)
                 {
-                    perror(argv[0]);
+                    perror("read");
                     exit(3);
                 }
 
@@ -42,7 +42,7 @@ int main(int argc, char const* const* argv)
         {
             if (-1 == read_count)
             {
-                perror(argv[0]);
+                perror("read");
                 exit(3);
             }
 

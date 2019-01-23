@@ -10,7 +10,7 @@ int main(int argc, char* const* argv)
     int input_fileno = open(argv[1], O_RDONLY);
     if (-1 == input_fileno)
     {
-        perror(argv[0]);
+        perror("open");
         exit(5);
     }
 
@@ -18,7 +18,7 @@ int main(int argc, char* const* argv)
 
     if (-1 == execlp("wc", "wc", NULL))
     {
-        perror(argv[0]);
+        perror("exec");
         exit(8);
     }
 

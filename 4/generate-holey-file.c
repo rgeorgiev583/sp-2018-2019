@@ -33,7 +33,7 @@ int main(int argc, const char* const* argv)
 	int output_fileno = creat(argv[3], DEFAULT_FILE_MODE);
     if (-1 == output_fileno)
     {
-        perror(argv[0]);
+        perror("open");
         exit(5);
     }
 	
@@ -41,13 +41,13 @@ int main(int argc, const char* const* argv)
 	{
 		if (-1 == write(output_fileno, TEST_PATTERN, TEST_PATTERN_LENGTH))
         {
-            perror(argv[0]);
+            perror("write");
             exit(4);
         }
 
 		if (-1 == lseek(output_fileno, hole_size, SEEK_CUR))
 		{
-			perror(argv[0]);
+			perror("lseek");
 			exit(6);
 		}
 	}

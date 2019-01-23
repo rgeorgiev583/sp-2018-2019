@@ -16,7 +16,7 @@ void head(const char* program_name, const int fileno, size_t total_line_count)
     {
         if (-1 == read_count)
         {
-            perror(program_name);
+            perror("read");
             exit(3);
         }
 
@@ -44,7 +44,7 @@ int main(int argc, char const* const* argv)
         {
             if (-1 == open(argv[i], O_RDONLY))
             {
-                perror(argv[0]);
+                perror("open");
                 exit(5);
             }
         }

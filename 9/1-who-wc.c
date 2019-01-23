@@ -8,7 +8,7 @@ int main(int argc, const char* const* argv)
     int pipe_fileno[2];
     if (-1 == pipe(pipe_fileno))
     {
-        perror(argv[0]);
+        perror("pipe");
         exit(12);
     }
 
@@ -16,7 +16,7 @@ int main(int argc, const char* const* argv)
     switch (who_pid)
     {
     case -1:
-        perror(argv[0]);
+        perror("fork");
         exit(9);
 
     case 0:
@@ -25,7 +25,7 @@ int main(int argc, const char* const* argv)
 
         if (-1 == execlp("who", "who", NULL))
         {
-            perror(argv[0]);
+            perror("exec");
             exit(8);
         }
     }
@@ -34,7 +34,7 @@ int main(int argc, const char* const* argv)
     switch (wc_pid)
     {
     case -1:
-        perror(argv[0]);
+        perror("fork");
         exit(9);
 
     case 0:
@@ -43,7 +43,7 @@ int main(int argc, const char* const* argv)
 
         if (-1 == execlp("wc", "wc", "-l", NULL))
         {
-            perror(argv[0]);
+            perror("exec");
             exit(8);
         }
     }

@@ -8,7 +8,7 @@ int main(int argc, const char** argv)
     int pipe_grep_sort_fileno[2];
     if (-1 == pipe(pipe_grep_sort_fileno))
     {
-        perror(argv[0]);
+        perror("pipe");
         exit(12);
     }
 
@@ -16,7 +16,7 @@ int main(int argc, const char** argv)
     switch (grep_pid)
     {
     case -1:
-        perror(argv[0]);
+        perror("fork");
         exit(9);
 
     case 0:
@@ -26,7 +26,7 @@ int main(int argc, const char** argv)
         argv[0] = "grep";
         if (-1 == execvp("grep", (char* const*)argv))
         {
-            perror(argv[0]);
+            perror("exec");
             exit(8);
         }
     }
@@ -34,7 +34,7 @@ int main(int argc, const char** argv)
     int pipe_sort_uniq_fileno[2];
     if (-1 == pipe(pipe_sort_uniq_fileno))
     {
-        perror(argv[0]);
+        perror("pipe");
         exit(12);
     }
 
@@ -42,7 +42,7 @@ int main(int argc, const char** argv)
     switch (sort_pid)
     {
     case -1:
-        perror(argv[0]);
+        perror("fork");
         exit(9);
 
     case 0:
@@ -53,7 +53,7 @@ int main(int argc, const char** argv)
 
         if (-1 == execlp("sort", "sort", NULL))
         {
-            perror(argv[0]);
+            perror("exec");
             exit(8);
         }
     }
@@ -61,7 +61,7 @@ int main(int argc, const char** argv)
     int pipe_uniq_wc_fileno[2];
     if (-1 == pipe(pipe_uniq_wc_fileno))
     {
-        perror(argv[0]);
+        perror("pipe");
         exit(12);
     }
 
@@ -69,7 +69,7 @@ int main(int argc, const char** argv)
     switch (uniq_pid)
     {
     case -1:
-        perror(argv[0]);
+        perror("fork");
         exit(9);
 
     case 0:
@@ -82,7 +82,7 @@ int main(int argc, const char** argv)
 
         if (-1 == execlp("uniq", "uniq", NULL))
         {
-            perror(argv[0]);
+            perror("exec");
             exit(8);
         }
     }
@@ -91,7 +91,7 @@ int main(int argc, const char** argv)
     switch (wc_pid)
     {
     case -1:
-        perror(argv[0]);
+        perror("fork");
         exit(9);
 
     case 0:
@@ -104,7 +104,7 @@ int main(int argc, const char** argv)
 
         if (-1 == execlp("wc", "wc", "-l", NULL))
         {
-            perror(argv[0]);
+            perror("exec");
             exit(8);
         }
     }

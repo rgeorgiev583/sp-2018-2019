@@ -14,14 +14,14 @@ int main(int argc, const char* const* argv)
     int fileno1 = open(argv[1], O_RDONLY);
     if (-1 == fileno1)
     {
-        perror(argv[0]);
+        perror("open");
         exit(5);
     }
 
     int fileno2 = open(argv[2], O_RDONLY);
     if (-1 == fileno2)
     {
-        perror(argv[0]);
+        perror("open");
         exit(5);
     }
 
@@ -34,14 +34,14 @@ int main(int argc, const char* const* argv)
         read_count1 = read(fileno1, &buffer1, 1);
         if (-1 == read_count1)
         {
-            perror(argv[0]);
+            perror("read");
             exit(3);
         }
 
         read_count2 = read(fileno2, &buffer2, 1);
         if (-1 == read_count2)
         {
-            perror(argv[0]);
+            perror("read");
             exit(3);
         }
 

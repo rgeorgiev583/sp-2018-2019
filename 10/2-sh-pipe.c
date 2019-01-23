@@ -98,7 +98,7 @@ int main(int argc, const char* const* argv)
         if (-1 == command_length)
         {
             perror(argv[0]);
-            return 3;
+            exit(3);
         }
 
         command_buffer[command_length - 1] = '\0';
@@ -114,7 +114,7 @@ int main(int argc, const char* const* argv)
         while (NULL != command_argv[command_argc]);
 
         if (0 == strcmp(command_argv[0], "exit") || 0 == strcmp(command_argv[0], "quit"))
-            return 0;
+            exit(0);
 
         int operator_count = 0, operator_types[MAX_ARG_COUNT], subcommand_argv_positions[MAX_ARG_COUNT][2];
         operator_types[operator_count] = 0;

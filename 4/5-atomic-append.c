@@ -12,7 +12,7 @@
 int main(int argc, const char* const* argv)
 {
     if (argc < REQUIRED_ARG_COUNT + 1)
-        return 1;
+        exit(1);
 
     int base_arg = 1;
     bool do_lseek = false;
@@ -30,14 +30,14 @@ int main(int argc, const char* const* argv)
     if (-1 == output_fileno)
     {
         perror(argv[0]);
-        return 5;
+        exit(5);
     }
 
     long byte_count = atol(argv[base_arg + 1]);
     if (byte_count < 0)
     {
         perror(argv[0]);
-        return 2;
+        exit(2);
     }
 
     for (int i = 0; i < byte_count; i++)
@@ -48,7 +48,7 @@ int main(int argc, const char* const* argv)
         if (-1 == write(output_fileno, "x", 1))
         {
             perror(argv[0]);
-            return 4;
+            exit(4);
         }
     }
 

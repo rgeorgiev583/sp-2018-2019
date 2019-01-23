@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 #define DEFAULT_FILE_MODE 0644
@@ -9,20 +10,20 @@
 int main(int argc, const char* const* argv)
 {
     if (argc < REQUIRED_ARG_COUNT + 1)
-        return 1;
+        exit(1);
 
     int input_fileno = open(argv[1], O_RDONLY);
     if (-1 == input_fileno)
     {
         perror(argv[0]);
-        return 5;
+        exit(5);
     }
 
     int output_fileno = creat(argv[2], DEFAULT_FILE_MODE);
     if (-1 == output_fileno)
     {
         perror(argv[0]);
-        return 5;
+        exit(5);
     }
 
     char buffer;
@@ -33,7 +34,7 @@ int main(int argc, const char* const* argv)
         if (-1 == read_count)
         {
             perror(argv[0]);
-            return 3;
+            exit(3);
         }
 
         if ('\0' == buffer)
@@ -49,7 +50,7 @@ int main(int argc, const char* const* argv)
             if (-1 == write(output_fileno, &buffer, 1))
             {
                 perror(argv[0]);
-                return 4;
+                exit(4);
             }
         }
     }

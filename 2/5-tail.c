@@ -8,20 +8,20 @@
 int main(int argc, const char* const* argv)
 {
     if (argc < REQUIRED_ARG_COUNT + 1)
-        return 1;
+        exit(1);
 
     int total_count = atoi(argv[1]);
     if (total_count < 0)
     {
         perror(argv[0]);
-        return 2;
+        exit(2);
     }
 
     int input_fileno = open(argv[2], O_RDONLY);
     if (-1 == input_fileno)
     {
         perror(argv[0]);
-        return 5;
+        exit(5);
     }
 
     char buffer;
@@ -32,7 +32,7 @@ int main(int argc, const char* const* argv)
         if (-1 == read_count)
         {
             perror(argv[0]);
-            return 3;
+            exit(3);
         }
 
         current_count++;
@@ -42,7 +42,7 @@ int main(int argc, const char* const* argv)
         if (-1 == read_count)
         {
             perror(argv[0]);
-            return 3;
+            exit(3);
         }
 
         write(STDOUT_FILENO, &buffer, 1);

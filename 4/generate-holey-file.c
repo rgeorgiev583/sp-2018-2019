@@ -14,27 +14,27 @@
 int main(int argc, const char* const* argv)
 {
 	if (argc < REQUIRED_ARG_COUNT + 1)
-		return 1;
+		exit(1);
 
 	int hole_count = atoi(argv[1]);
     if (hole_count < 0)
     {
         perror(argv[0]);
-        return 2;
+        exit(2);
     }
 
 	int hole_size = atoi(argv[2]);
     if (hole_size < 0)
     {
         perror(argv[0]);
-        return 2;
+        exit(2);
     }
 
 	int output_fileno = creat(argv[3], DEFAULT_FILE_MODE);
     if (-1 == output_fileno)
     {
         perror(argv[0]);
-        return 5;
+        exit(5);
     }
 	
 	for (int i = 0; i < hole_count; i++)
@@ -42,13 +42,13 @@ int main(int argc, const char* const* argv)
 		if (-1 == write(output_fileno, TEST_PATTERN, TEST_PATTERN_LENGTH))
         {
             perror(argv[0]);
-            return 4;
+            exit(4);
         }
 
 		if (-1 == lseek(output_fileno, hole_size, SEEK_CUR))
 		{
 			perror(argv[0]);
-			return 6;
+			exit(6);
 		}
 	}
 

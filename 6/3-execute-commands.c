@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <sys/wait.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 int main(int argc, char* const* argv)
@@ -10,13 +11,13 @@ int main(int argc, char* const* argv)
         {
         case -1:
             perror(argv[0]);
-            return 9;
+            exit(9);
 
         case 0:
             if (-1 == execlp(argv[i], argv[i], NULL))
             {
                 perror(argv[0]);
-                return 8;
+                exit(8);
             }
         }
     }

@@ -39,7 +39,7 @@
         int main(int argc, const char* const* argv)
         {
             if (argc < 2)
-                return 1;
+                exit(1);
 
             int fd1 = open(argv[1], O_RDWR | O_CREAT | O_TRUNC, S_IRUSR | S_IWUSR);
             int fd2 = dup(fd1);

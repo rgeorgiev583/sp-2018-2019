@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 #define REQUIRED_ARG_COUNT 4
@@ -11,14 +12,14 @@ int main(int argc, char* const* argv)
     if (-1 == input_fileno)
     {
         perror(argv[0]);
-        return 5;
+        exit(5);
     }
 
     int output_fileno = creat(argv[4], DEFAULT_FILE_MODE);
     if (-1 == output_fileno)
     {
         perror(argv[0]);
-        return 5;
+        exit(5);
     }
 
     dup2(input_fileno, STDIN_FILENO);
@@ -27,7 +28,7 @@ int main(int argc, char* const* argv)
     if (-1 == execlp("tr", "tr", argv[1], argv[2], NULL))
     {
         perror(argv[0]);
-        return 8;
+        exit(8);
     }
 
     return 0;

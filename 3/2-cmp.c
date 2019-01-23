@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 
@@ -8,20 +9,20 @@
 int main(int argc, const char* const* argv)
 {
     if (argc < REQUIRED_ARG_COUNT + 1)
-        return 1;
+        exit(1);
 
     int fileno1 = open(argv[1], O_RDONLY);
     if (-1 == fileno1)
     {
         perror(argv[0]);
-        return 5;
+        exit(5);
     }
 
     int fileno2 = open(argv[2], O_RDONLY);
     if (-1 == fileno2)
     {
         perror(argv[0]);
-        return 5;
+        exit(5);
     }
 
     char buffer1, buffer2;
@@ -34,14 +35,14 @@ int main(int argc, const char* const* argv)
         if (-1 == read_count1)
         {
             perror(argv[0]);
-            return 3;
+            exit(3);
         }
 
         read_count2 = read(fileno2, &buffer2, 1);
         if (-1 == read_count2)
         {
             perror(argv[0]);
-            return 3;
+            exit(3);
         }
 
         if (0 == read_count1 || 0 == read_count2)

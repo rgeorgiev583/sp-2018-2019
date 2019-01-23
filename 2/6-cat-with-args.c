@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 #define MAX_STD_FILENO 2
@@ -17,7 +18,7 @@ int main(int argc, char const* const* argv)
             if (-1 == open(argv[i], O_RDONLY))
             {
                 perror(argv[0]);
-                return 5;
+                exit(5);
             }
         }
 
@@ -28,7 +29,7 @@ int main(int argc, char const* const* argv)
                 if (-1 == read_count)
                 {
                     perror(argv[0]);
-                    return 3;
+                    exit(3);
                 }
 
                 write(STDOUT_FILENO, buffer, read_count);
@@ -42,7 +43,7 @@ int main(int argc, char const* const* argv)
             if (-1 == read_count)
             {
                 perror(argv[0]);
-                return 3;
+                exit(3);
             }
 
             write(STDOUT_FILENO, buffer, read_count);

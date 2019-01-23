@@ -106,7 +106,7 @@ int main(int argc, const char* const* argv)
             if (NULL == input_file)
             {
                 perror(argv[0]);
-                return 2;
+                exit(2);
             }
 
             sh(argv[0], input_file);

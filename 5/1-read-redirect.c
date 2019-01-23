@@ -1,5 +1,6 @@
 #include <unistd.h>
 #include <fcntl.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 
@@ -8,13 +9,13 @@
 int main(int argc, const char* const* argv)
 {
     if (argc < REQUIRED_ARG_COUNT + 1)
-        return 1;
+        exit(1);
 
     int input_fileno = open(argv[1], O_RDONLY);
     if (-1 == input_fileno)
     {
         perror(argv[0]);
-        return 5;
+        exit(5);
     }
 
     dup2(input_fileno, STDIN_FILENO);
@@ -26,7 +27,7 @@ int main(int argc, const char* const* argv)
         if (-1 == read_count)
         {
             perror(argv[0]);
-            return 3;
+            exit(3);
         }
 
         write(STDOUT_FILENO, &buffer, read_count);

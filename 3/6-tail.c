@@ -31,13 +31,13 @@ void tail(const char* program_name, int fileno, size_t total_line_count)
 int main(int argc, char const* const* argv)
 {
     if (argc < REQUIRED_ARG_COUNT + 1)
-        return 1;
+        exit(1);
 
     size_t total_line_count = atoi(argv[1]);
     if (total_line_count < 0)
     {
         perror(argv[0]);
-        return 2;
+        exit(2);
     }
 
     if (argc > REQUIRED_ARG_COUNT + 1)
@@ -47,7 +47,7 @@ int main(int argc, char const* const* argv)
             if (-1 == open(argv[i], O_RDONLY))
             {
                 perror(argv[0]);
-                return 5;
+                exit(5);
             }
         }
 

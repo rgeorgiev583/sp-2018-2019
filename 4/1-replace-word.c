@@ -11,7 +11,7 @@
 int main(int argc, const char* const* argv)
 {
     if (argc < REQUIRED_ARG_COUNT + 1)
-        return 1;
+        exit(1);
 
     int position = atoi(argv[1]);
 
@@ -19,26 +19,26 @@ int main(int argc, const char* const* argv)
     if (word_length < 0)
     {
         perror(argv[0]);
-        return 2;
+        exit(2);
     }
 
     int fileno = open(argv[3], O_WRONLY, DEFAULT_FILE_MODE);
     if (-1 == fileno)
     {
         perror(argv[0]);
-        return 5;
+        exit(5);
     }
 
     if (-1 == lseek(fileno, position, position >= 0 ? SEEK_SET : SEEK_END))
     {
         perror(argv[0]);
-        return 6;
+        exit(6);
     }
 
     if (-1 == write(fileno, argv[2], word_length))
     {
         perror(argv[0]);
-        return 4;
+        exit(4);
     }
 
     return 0;

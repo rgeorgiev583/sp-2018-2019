@@ -1,4 +1,5 @@
 #include <unistd.h>
+#include <stdlib.h>
 #include <stdio.h>
 
 int main(int argc, const char* const* argv)
@@ -10,7 +11,7 @@ int main(int argc, const char* const* argv)
         if (-1 == read_count)
         {
             perror(argv[0]);
-            return 3;
+            exit(3);
         }
 
         write(STDOUT_FILENO, buffer, read_count);

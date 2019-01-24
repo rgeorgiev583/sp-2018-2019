@@ -33,10 +33,7 @@ int main(int argc, char const* const* argv)
 
     size_t total_line_count = atoi(argv[1]);
     if (total_line_count < 0)
-    {
-        perror(argv[0]);
         exit(2);
-    }
 
     if (argc > REQUIRED_ARG_COUNT + 1)
     {

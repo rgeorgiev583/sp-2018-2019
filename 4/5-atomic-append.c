@@ -35,10 +35,7 @@ int main(int argc, const char* const* argv)
 
     long byte_count = atol(argv[base_arg + 1]);
     if (byte_count <= 0)
-    {
-        perror(argv[0]);
         exit(2);
-    }
 
     for (int i = 0; i < byte_count; i++)
     {

@@ -41,17 +41,11 @@ int main(int argc, char const* const* argv)
 
     int from_position_in_line = atoi(argv[1]);
     if (from_position_in_line <= 0)
-    {
-        perror(argv[0]);
         exit(2);
-    }
 
     int to_position_in_line = atoi(argv[2]);
     if (to_position_in_line <= 0)
-    {
-        perror(argv[0]);
         exit(2);
-    }
 
     if (argc > REQUIRED_ARG_COUNT + 1)
     {

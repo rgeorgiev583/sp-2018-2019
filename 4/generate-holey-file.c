@@ -18,17 +18,11 @@ int main(int argc, const char* const* argv)
 
 	int hole_count = atoi(argv[1]);
     if (hole_count < 0)
-    {
-        perror(argv[0]);
         exit(2);
-    }
 
 	int hole_size = atoi(argv[2]);
     if (hole_size <= 0)
-    {
-        perror(argv[0]);
         exit(2);
-    }
 
 	int output_fileno = creat(argv[3], DEFAULT_FILE_MODE);
     if (-1 == output_fileno)

@@ -12,10 +12,7 @@ int main(int argc, const char* const* argv)
 
     int total_count = atoi(argv[1]);
     if (total_count < 0)
-    {
-        perror(argv[0]);
         exit(2);
-    }
 
     int input_fileno = open(argv[2], O_RDONLY);
     if (-1 == input_fileno)

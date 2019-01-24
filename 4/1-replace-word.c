@@ -17,10 +17,7 @@ int main(int argc, const char* const* argv)
 
     int word_length = strlen(argv[2]);
     if (word_length <= 0)
-    {
-        perror(argv[0]);
         exit(2);
-    }
 
     int fileno = open(argv[3], O_WRONLY, DEFAULT_FILE_MODE);
     if (-1 == fileno)

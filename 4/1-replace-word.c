@@ -16,7 +16,7 @@ int main(int argc, const char* const* argv)
     int position = atoi(argv[1]);
 
     int word_length = strlen(argv[2]);
-    if (word_length < 0)
+    if (word_length <= 0)
     {
         perror(argv[0]);
         exit(2);

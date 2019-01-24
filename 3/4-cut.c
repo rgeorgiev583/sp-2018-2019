@@ -40,14 +40,14 @@ int main(int argc, char const* const* argv)
         exit(1);
 
     int from_position_in_line = atoi(argv[1]);
-    if (from_position_in_line < 0)
+    if (from_position_in_line <= 0)
     {
         perror(argv[0]);
         exit(2);
     }
 
     int to_position_in_line = atoi(argv[2]);
-    if (to_position_in_line < 0)
+    if (to_position_in_line <= 0)
     {
         perror(argv[0]);
         exit(2);

@@ -24,7 +24,7 @@ int main(int argc, const char* const* argv)
     }
 
 	int hole_size = atoi(argv[2]);
-    if (hole_size < 0)
+    if (hole_size <= 0)
     {
         perror(argv[0]);
         exit(2);

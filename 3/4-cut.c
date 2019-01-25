@@ -22,11 +22,13 @@ void cut(int fileno, ssize_t from_position_in_line, ssize_t to_position_in_line)
         if ('\n' == buffer)
         {
             current_position_in_line = 0;
+
             write(STDOUT_FILENO, &buffer, 1);
         }
         else
         {
             current_position_in_line++;
+
             if (current_position_in_line >= from_position_in_line && current_position_in_line <= to_position_in_line)
                 write(STDOUT_FILENO, &buffer, 1);
         }

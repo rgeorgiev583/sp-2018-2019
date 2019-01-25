@@ -3,7 +3,6 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-
 #define REQUIRED_ARG_COUNT 1
 
 int main(int argc, const char* const* argv)

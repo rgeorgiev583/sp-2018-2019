@@ -28,5 +28,6 @@ int main(int argc, char* const* argv)
     int status;
     wait(&status);
     printf("\n%d\n", WEXITSTATUS(status));
+
     return 0;
 }

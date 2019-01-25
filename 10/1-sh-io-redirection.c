@@ -79,6 +79,7 @@ int main(int argc, const char* const* argv)
     while (1)
     {
         write(1, "$ ", 2);
+
         char command_buffer[BUFSIZ];
         ssize_t command_length = read(0, command_buffer, BUFSIZ);
         if (-1 == command_length)
@@ -143,7 +144,7 @@ int main(int argc, const char* const* argv)
         for (int i = 0; i < operator_count; i++)
         {
             if ((1 == operator_types[i] && 0 != exit_status) || (2 == operator_types[i] && 0 == exit_status))
-            break;
+                break;
 
             int subcommand_argv_position = next_subcommand_argv_positions[i];
             exit_status = fork_exec((char* const*)command_argv + subcommand_argv_position, output_filenames[i + 1], append_filenames[i + 1], input_filenames[i + 1]);

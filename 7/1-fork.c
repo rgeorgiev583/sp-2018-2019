@@ -20,5 +20,6 @@ int main(int argc, const char* const* argv)
     wait(&status);
     printf("%d\n", pid);
     printf("%d\n", WEXITSTATUS(status));
+
     return 0;
 }

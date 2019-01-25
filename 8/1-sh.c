@@ -11,6 +11,7 @@ int main(int argc, const char* const* argv)
     while (1)
     {
         write(1, "$ ", 2);
+
         char command_buffer[BUFSIZ];
         ssize_t command_length = read(0, command_buffer, BUFSIZ);
         if (-1 == command_length)

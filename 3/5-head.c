@@ -21,6 +21,7 @@ void head(const int fileno, ssize_t total_line_count)
 
         if ('\n' == buffer)
             current_line_count++;
+
         write(STDOUT_FILENO, &buffer, 1);
     }
 }

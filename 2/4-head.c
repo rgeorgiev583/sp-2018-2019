@@ -32,6 +32,7 @@ int main(int argc, const char* const* argv)
         }
 
         write(STDOUT_FILENO, &buffer, 1);
+
         current_count++;
     }
 

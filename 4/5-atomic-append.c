@@ -16,7 +16,6 @@ int main(int argc, const char* const* argv)
 
     int base_arg = 1;
     bool do_lseek = false;
-
     if (!strcmp(argv[1], "-l"))
     {
         base_arg = 2;

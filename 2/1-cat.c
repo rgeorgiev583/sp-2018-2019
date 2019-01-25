@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int main(int argc, const char* const* argv)
+int main(void)
 {
     char buffer[BUFSIZ];
     ssize_t read_count;

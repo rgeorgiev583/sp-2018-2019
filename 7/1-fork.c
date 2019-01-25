@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int main(int argc, const char* const* argv)
+int main(void)
 {
     pid_t pid = fork();
     switch (pid)

@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int main(int argc, const char* const* argv)
+int main(void)
 {
     int pipe_fileno[2];
     if (-1 == pipe(pipe_fileno))

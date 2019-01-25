@@ -22,7 +22,7 @@ int main(int argc, const char* const* argv)
     dup2(output_fileno, STDOUT_FILENO);
 
     char buffer[BUFSIZ];
-    size_t read_count;
+    ssize_t read_count;
     while ((read_count = read(STDIN_FILENO, buffer, BUFSIZ)) > 0)
     {
         if (-1 == read_count)

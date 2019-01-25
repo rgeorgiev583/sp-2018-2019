@@ -16,11 +16,11 @@ int main(int argc, const char* const* argv)
     if (strlen(argv[3]) > 1)
         exit(2);
 
-    int from_position = atoi(argv[1]);
+    ssize_t from_position = atol(argv[1]);
     if (from_position < 0)
         exit(2);
 
-    int to_position = atoi(argv[2]);
+    ssize_t to_position = atol(argv[2]);
     if (to_position < 0)
         exit(2);
 
@@ -37,7 +37,7 @@ int main(int argc, const char* const* argv)
         exit(6);
     }
 
-    for (size_t i = from_position; i <= to_position; i++)
+    for (ssize_t i = from_position; i <= to_position; i++)
     {
         if (-1 == write(fileno, argv[3], 1))
         {

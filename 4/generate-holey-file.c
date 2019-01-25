@@ -16,11 +16,11 @@ int main(int argc, const char* const* argv)
 	if (argc < REQUIRED_ARG_COUNT + 1)
 		exit(1);
 
-	int hole_count = atoi(argv[1]);
+	ssize_t hole_count = atol(argv[1]);
     if (hole_count < 0)
         exit(2);
 
-	int hole_size = atoi(argv[2]);
+	ssize_t hole_size = atol(argv[2]);
     if (hole_size <= 0)
         exit(2);
 
@@ -31,7 +31,7 @@ int main(int argc, const char* const* argv)
         exit(5);
     }
 	
-	for (int i = 0; i < hole_count; i++)
+	for (ssize_t i = 0; i < hole_count; i++)
 	{
 		if (-1 == write(output_fileno, TEST_PATTERN, TEST_PATTERN_LENGTH))
         {

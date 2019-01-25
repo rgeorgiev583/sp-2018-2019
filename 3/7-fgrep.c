@@ -11,7 +11,7 @@
 
 void fgrep(int fileno, const char* pattern)
 {
-    size_t pattern_length = 0;
+    ssize_t pattern_length = 0;
     while ('\0' != pattern[pattern_length])
         pattern_length++;
 
@@ -19,8 +19,7 @@ void fgrep(int fileno, const char* pattern)
     while (is_not_eof)
     {
         char buffer[MAX_LINE_LENGTH];
-        size_t current_line_length = 0;
-        ssize_t read_count;
+        ssize_t read_count, current_line_length = 0;
         while (current_line_length < MAX_LINE_LENGTH && (is_not_eof = read(fileno, &buffer[current_line_length], 1) > 0) && '\n' != buffer[current_line_length])
         {
             if (-1 == read_count)
@@ -32,9 +31,9 @@ void fgrep(int fileno, const char* pattern)
             current_line_length++;
         }
 
-        for (size_t i = 0; i < current_line_length - pattern_length + 1; i++)
+        for (ssize_t i = 0; i < current_line_length - pattern_length + 1; i++)
         {
-            size_t j;
+            ssize_t j;
             for (j = 0; j < pattern_length; j++)
                 if (pattern[j] != buffer[i + j])
                     break;

@@ -10,7 +10,7 @@ int main(int argc, const char* const* argv)
     if (argc < REQUIRED_ARG_COUNT + 1)
         exit(1);
 
-    int total_count = atoi(argv[1]);
+    ssize_t total_count = atol(argv[1]);
     if (total_count < 0)
         exit(2);
 
@@ -22,8 +22,7 @@ int main(int argc, const char* const* argv)
     }
 
     char buffer;
-    ssize_t read_count;
-    int current_count = 0;
+    ssize_t read_count, current_count = 0;
     while (current_count < total_count && (read_count = read(input_fileno, &buffer, 1)) != 0)
     {
         if (-1 == read_count)

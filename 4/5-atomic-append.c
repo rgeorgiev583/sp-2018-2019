@@ -33,11 +33,11 @@ int main(int argc, const char* const* argv)
         exit(5);
     }
 
-    long byte_count = atol(argv[base_arg + 1]);
+    ssize_t byte_count = atol(argv[base_arg + 1]);
     if (byte_count <= 0)
         exit(2);
 
-    for (int i = 0; i < byte_count; i++)
+    for (ssize_t i = 0; i < byte_count; i++)
     {
         if (do_lseek)
             lseek(output_fileno, 0, SEEK_END);

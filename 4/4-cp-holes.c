@@ -27,8 +27,7 @@ int main(int argc, const char* const* argv)
     }
 
     char buffer;
-    size_t hole_size = 0;
-    ssize_t read_count;
+    ssize_t read_count, hole_size = 0;
     while ((read_count = read(input_fileno, &buffer, 1)) != 0)
     {
         if (-1 == read_count)

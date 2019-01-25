@@ -9,7 +9,7 @@
 
 static ssize_t total_line_count;
 
-void tail(int fileno)
+static void tail(int fileno)
 {
     char buffer;
     ssize_t read_count, current_line_count = 0;

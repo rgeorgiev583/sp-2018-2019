@@ -10,7 +10,7 @@
 
 static const char* argv0;
 
-int fork_exec(char* const* command_argv, const char* output_filename, const char* append_filename, const char* input_filename)
+static int fork_exec(char* const* command_argv, const char* output_filename, const char* append_filename, const char* input_filename)
 {
     pid_t pid = fork();
     if (-1 == pid)

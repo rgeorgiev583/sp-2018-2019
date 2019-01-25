@@ -7,7 +7,7 @@
 
 static ssize_t total_char_count = 0, total_line_count = 0;
 
-void wc(int fileno, const char* filename)
+static void wc(int fileno, const char* filename)
 {
     char buffer;
     ssize_t read_count, char_count = 0, line_count = 0;

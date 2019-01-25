@@ -8,7 +8,7 @@
 
 static const char* argv0;
 
-int fork_exec(char* const* command_argv)
+static int fork_exec(char* const* command_argv)
 {
     pid_t pid = fork();
     if (-1 == pid)
@@ -31,7 +31,7 @@ int fork_exec(char* const* command_argv)
     return WEXITSTATUS(status);
 }
 
-int fork_exec_pipe(char* const* input_command_argv, char* const* output_command_argv)
+static int fork_exec_pipe(char* const* input_command_argv, char* const* output_command_argv)
 {
     int pipe_fileno[2];
     if (-1 == pipe(pipe_fileno))

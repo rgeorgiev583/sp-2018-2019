@@ -13,7 +13,7 @@
 static const char* pattern;
 static ssize_t pattern_length;
 
-void fgrep(int fileno)
+static void fgrep(int fileno)
 {
 
     bool is_not_eof = true;

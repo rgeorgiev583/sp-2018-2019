@@ -9,7 +9,7 @@
 
 static ssize_t from_position_in_line, to_position_in_line;
 
-void cut(int fileno)
+static void cut(int fileno)
 {
     char buffer;
     ssize_t read_count, current_position_in_line = 0;

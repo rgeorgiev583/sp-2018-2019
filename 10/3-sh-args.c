@@ -8,7 +8,7 @@
 
 static const char* argv0;
 
-int fork_exec(char* const* command_argv)
+static int fork_exec(char* const* command_argv)
 {
     pid_t pid = fork();
     if (-1 == pid)
@@ -31,7 +31,7 @@ int fork_exec(char* const* command_argv)
     return WEXITSTATUS(status);
 }
 
-void sh(FILE* input_file)
+static void sh(FILE* input_file)
 {
     while (1)
     {

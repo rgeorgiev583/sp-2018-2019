@@ -5,7 +5,7 @@
 
 #define REQUIRED_ARG_COUNT 2
 
-int fork_exec(const char* command_name)
+static int fork_exec(const char* command_name)
 {
     pid_t pid = fork();
     switch (pid)

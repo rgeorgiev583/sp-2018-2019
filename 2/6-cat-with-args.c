@@ -5,7 +5,7 @@
 
 #define MAX_STD_FILENO 2
 
-void cat(int input_fileno)
+static void cat(int input_fileno)
 {
     char buffer[BUFSIZ];
     ssize_t read_count;

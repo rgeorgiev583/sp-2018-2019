@@ -9,6 +9,9 @@
 
 int main(int argc, char* const* argv)
 {
+    if (argc < REQUIRED_ARG_COUNT + 1)
+        exit(1);
+
     const char* set1 = argv[1];
 
     const char* set2 = argv[2];

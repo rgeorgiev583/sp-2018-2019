@@ -25,7 +25,7 @@ int main(int argc, const char* const* argv)
     }
 
     char buffer1, buffer2;
-    ssize_t read_count1, read_count2, current_char_position = 0, current_line_position = 0;
+    ssize_t read_count1, read_count2, current_char_position = 0, current_line_position = 1;
     do
     {
         read_count1 = read(fileno1, &buffer1, 1);

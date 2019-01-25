@@ -7,7 +7,7 @@
 
 #define REQUIRED_ARG_COUNT 1
 
-void head(const int fileno, ssize_t total_line_count)
+void head(int fileno, ssize_t total_line_count)
 {
     char buffer;
     ssize_t read_count, current_line_count = 0;
@@ -26,7 +26,7 @@ void head(const int fileno, ssize_t total_line_count)
     }
 }
 
-int main(int argc, char const* const* argv)
+int main(int argc, const char* const* argv)
 {
     if (argc < REQUIRED_ARG_COUNT + 1)
         exit(1);

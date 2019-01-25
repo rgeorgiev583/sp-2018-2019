@@ -27,7 +27,7 @@ void tail(int fileno, ssize_t total_line_count)
         write(STDOUT_FILENO, &buffer, 1);
 }
 
-int main(int argc, char const* const* argv)
+int main(int argc, const char* const* argv)
 {
     if (argc < REQUIRED_ARG_COUNT + 1)
         exit(1);

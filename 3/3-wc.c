@@ -25,7 +25,7 @@ void wc(int fileno, ssize_t* char_count, ssize_t* line_count)
     }
 }
 
-int main(int argc, char const* const* argv)
+int main(int argc, const char* const* argv)
 {
     ssize_t total_char_count = 0, total_line_count = 0;
 

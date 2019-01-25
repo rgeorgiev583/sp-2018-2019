@@ -49,7 +49,7 @@ void fgrep(int fileno, const char* pattern)
     }
 }
 
-int main(int argc, char const* const* argv)
+int main(int argc, const char* const* argv)
 {
     if (argc < REQUIRED_ARG_COUNT + 1)
         exit(1);

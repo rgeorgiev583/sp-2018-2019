@@ -91,7 +91,7 @@ int main(int argc, const char* const* argv)
                 break;
 
             int subcommand_argv_position = subcommand_argv_positions[i];
-            exit_status = fork_exec((char* const*)command_argv + subcommand_argv_position);
+            exit_status = fork_exec(command_argv + subcommand_argv_position);
         }
     }
 

@@ -83,7 +83,7 @@ int main(int argc, const char* const* argv)
         if ((1 == operator_type && 0 != exit_status) || (2 == operator_type && 0 == exit_status))
             continue;
 
-        fork_exec((char* const*)command_argv + next_subcommand_argv_position);
+        fork_exec(command_argv + next_subcommand_argv_position);
     }
 
     return 0;

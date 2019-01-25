@@ -17,7 +17,7 @@ int main(int argc, char** argv)
     else if (0 == strcmp(argv[1], "lines"))
         argv[1] = "-l";
 
-    if (-1 == execvp("wc", (char* const*)argv))
+    if (-1 == execvp("wc", argv))
     {
         perror("exec");
         exit(8);

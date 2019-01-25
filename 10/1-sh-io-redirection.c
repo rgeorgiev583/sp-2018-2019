@@ -147,7 +147,7 @@ int main(int argc, const char* const* argv)
                 break;
 
             int subcommand_argv_position = next_subcommand_argv_positions[i];
-            exit_status = fork_exec((char* const*)command_argv + subcommand_argv_position, output_filenames[i + 1], append_filenames[i + 1], input_filenames[i + 1]);
+            exit_status = fork_exec(command_argv + subcommand_argv_position, output_filenames[i + 1], append_filenames[i + 1], input_filenames[i + 1]);
         }
     }
 

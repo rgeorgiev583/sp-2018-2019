@@ -5,7 +5,7 @@
 
 #define REQUIRED_ARG_COUNT 2
 
-int main(int argc, const char** argv)
+int main(int argc, char** argv)
 {
     if (argc < REQUIRED_ARG_COUNT + 1)
         exit(1);
@@ -31,7 +31,7 @@ int main(int argc, const char** argv)
         argv[0] = "head";
         argv[2] = argv[1];
         argv[1] = "-n";
-        if (-1 == execvp("head", (char* const*)argv))
+        if (-1 == execvp("head", argv))
         {
             perror("exec");
             exit(8);

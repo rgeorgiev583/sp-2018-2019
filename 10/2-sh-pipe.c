@@ -160,9 +160,9 @@ int main(int argc, const char* const* argv)
             int input_subcommand_argv_position = subcommand_argv_positions[i][0];
             int output_subcommand_argv_position = subcommand_argv_positions[i][1];
             if (-1 == output_subcommand_argv_position)
-                exit_status = fork_exec((char* const*)command_argv + input_subcommand_argv_position);
+                exit_status = fork_exec(command_argv + input_subcommand_argv_position);
             else
-                exit_status = fork_exec_pipe((char* const*)command_argv + input_subcommand_argv_position, (char* const*)command_argv + output_subcommand_argv_position);
+                exit_status = fork_exec_pipe(command_argv + input_subcommand_argv_position, command_argv + output_subcommand_argv_position);
         }
     }
 

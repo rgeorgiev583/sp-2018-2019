@@ -3,7 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-int main(int argc, const char** argv)
+int main(int argc, char** argv)
 {
     int pipe_fileno[2];
     if (-1 == pipe(pipe_fileno))
@@ -24,7 +24,7 @@ int main(int argc, const char** argv)
         dup2(pipe_fileno[1], STDOUT_FILENO);
 
         argv[0] = "grep";
-        if (-1 == execvp("grep", (char* const*)argv))
+        if (-1 == execvp("grep", argv))
         {
             perror("exec");
             exit(8);

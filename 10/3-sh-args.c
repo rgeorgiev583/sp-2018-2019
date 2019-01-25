@@ -88,7 +88,7 @@ void sh(FILE* input_file)
                 break;
 
             int subcommand_argv_position = subcommand_argv_positions[i];
-            exit_status = fork_exec((char* const*)command_argv + subcommand_argv_position);
+            exit_status = fork_exec(command_argv + subcommand_argv_position);
         }
 
         free(command_buffer);

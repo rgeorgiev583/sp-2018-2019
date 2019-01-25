@@ -7,7 +7,9 @@
 
 #define REQUIRED_ARG_COUNT 1
 
-void head(int fileno, ssize_t total_line_count)
+static ssize_t total_line_count;
+
+void head(int fileno)
 {
     char buffer;
     ssize_t read_count, current_line_count = 0;
@@ -31,7 +33,7 @@ int main(int argc, const char* const* argv)
     if (argc < REQUIRED_ARG_COUNT + 1)
         exit(1);
 
-    ssize_t total_line_count = atol(argv[1]);
+    total_line_count = atol(argv[1]);
     if (total_line_count < 0)
         exit(2);
 
@@ -47,10 +49,10 @@ int main(int argc, const char* const* argv)
         }
 
         for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
-            head(MAX_STD_FILENO + i, total_line_count);
+            head(MAX_STD_FILENO + i);
     }
     else
-        head(STDIN_FILENO, total_line_count);
+        head(STDIN_FILENO);
 
     return 0;
 }

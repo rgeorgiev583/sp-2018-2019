@@ -5,12 +5,12 @@
 
 #define MAX_STD_FILENO 2
 
-void wc(int fileno, ssize_t* char_count, ssize_t* line_count)
+static ssize_t total_char_count = 0, total_line_count = 0;
+
+void wc(int fileno, const char* filename)
 {
     char buffer;
-    ssize_t read_count;
-    *char_count = 0;
-    *line_count = 0;
+    ssize_t read_count, char_count = 0, line_count = 0;
     while ((read_count = read(fileno, &buffer, 1)) != 0)
     {
         if (-1 == read_count)
@@ -19,16 +19,22 @@ void wc(int fileno, ssize_t* char_count, ssize_t* line_count)
             exit(3);
         }
 
-        (*char_count)++;
+        char_count++;
         if ('\n' == buffer)
-            (*line_count)++;
+            line_count++;
     }
+
+    if (NULL == filename)
+        printf(" %ld %ld\n", line_count, char_count);
+    else
+        printf(" %ld %ld %s\n", line_count, char_count, filename);
+
+    total_char_count += char_count;
+    total_line_count += line_count;
 }
 
 int main(int argc, const char* const* argv)
 {
-    ssize_t total_char_count = 0, total_line_count = 0;
-
     if (argc > 1)
     {
         for (int i = 1; i < argc; i++)
@@ -41,22 +47,10 @@ int main(int argc, const char* const* argv)
         }
 
         for (int i = 1; i < argc; i++)
-        {
-            ssize_t char_count, line_count;
-            wc(MAX_STD_FILENO + i, &char_count, &line_count);
-            printf(" %ld %ld %s\n", line_count, char_count, argv[i]);
-            total_char_count += char_count;
-            total_line_count += line_count;
-        }
+            wc(MAX_STD_FILENO + i, argv[i]);
     }
     else
-    {
-        ssize_t char_count = 0, line_count = 0;
-        wc(STDIN_FILENO, &char_count, &line_count);
-        printf(" %ld %ld\n", line_count, char_count);
-        total_char_count += char_count;
-        total_line_count += line_count;
-    }
+        wc(STDIN_FILENO, NULL);
 
     printf(" %ld %ld total\n", total_line_count, total_char_count);
 

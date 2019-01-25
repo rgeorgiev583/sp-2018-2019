@@ -10,9 +10,11 @@
 #define REQUIRED_ARG_COUNT 1
 #define MAX_LINE_LENGTH 80
 
-void fgrep(int fileno, const char* pattern)
+static const char* pattern;
+static ssize_t pattern_length;
+
+void fgrep(int fileno)
 {
-    ssize_t pattern_length = strlen(pattern);
 
     bool is_not_eof = true;
     while (is_not_eof)
@@ -53,6 +55,9 @@ int main(int argc, const char* const* argv)
     if (argc < REQUIRED_ARG_COUNT + 1)
         exit(1);
 
+    pattern = argv[1];
+    pattern_length = strlen(pattern);
+
     if (argc > REQUIRED_ARG_COUNT + 1)
     {
         for (int i = REQUIRED_ARG_COUNT + 1; i < argc; i++)
@@ -65,10 +70,10 @@ int main(int argc, const char* const* argv)
         }
 
         for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
-            fgrep(MAX_STD_FILENO + i, argv[1]);
+            fgrep(MAX_STD_FILENO + i);
     }
     else
-        fgrep(STDIN_FILENO, argv[1]);
+        fgrep(STDIN_FILENO);
 
     return 0;
 }

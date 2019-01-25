@@ -7,7 +7,9 @@
 
 #define REQUIRED_ARG_COUNT 2
 
-void cut(int fileno, ssize_t from_position_in_line, ssize_t to_position_in_line)
+static ssize_t from_position_in_line, to_position_in_line;
+
+void cut(int fileno)
 {
     char buffer;
     ssize_t read_count, current_position_in_line = 0;
@@ -40,11 +42,11 @@ int main(int argc, const char* const* argv)
     if (argc < REQUIRED_ARG_COUNT + 1)
         exit(1);
 
-    ssize_t from_position_in_line = atol(argv[1]);
+    from_position_in_line = atol(argv[1]);
     if (from_position_in_line <= 0)
         exit(2);
 
-    ssize_t to_position_in_line = atol(argv[2]);
+    to_position_in_line = atol(argv[2]);
     if (to_position_in_line <= 0)
         exit(2);
 
@@ -60,10 +62,10 @@ int main(int argc, const char* const* argv)
         }
 
         for (int i = 1; i < argc - REQUIRED_ARG_COUNT; i++)
-            cut(MAX_STD_FILENO + i, from_position_in_line, to_position_in_line);
+            cut(MAX_STD_FILENO + i);
     }
     else
-        cut(STDIN_FILENO, from_position_in_line, to_position_in_line);
+        cut(STDIN_FILENO);
 
     return 0;
 }

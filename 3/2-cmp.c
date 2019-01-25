@@ -46,7 +46,7 @@ int main(int argc, const char* const* argv)
             break;
 
         current_char_position++;
-        if ('\n' == buffer1)
+        if ('\n' == buffer1 && '\n' == buffer2)
             current_line_position++;
     }
     while (buffer1 == buffer2);

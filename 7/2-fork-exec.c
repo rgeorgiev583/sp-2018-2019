@@ -10,8 +10,7 @@ int main(int argc, char* const* argv)
     if (argc < REQUIRED_ARG_COUNT + 1)
         exit(1);
 
-    pid_t pid = fork();
-    switch (pid)
+    switch (fork())
     {
     case -1:
         perror("fork");

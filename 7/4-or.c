@@ -7,8 +7,7 @@
 
 static int fork_exec(const char* command_name)
 {
-    pid_t pid = fork();
-    switch (pid)
+    switch (fork())
     {
     case -1:
         perror("fork");

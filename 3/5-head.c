@@ -9,11 +9,11 @@
 
 static ssize_t total_line_count;
 
-static void head(int fileno)
+static void head(int input_fileno)
 {
     char buffer;
     ssize_t read_count, current_line_count = 0;
-    while (current_line_count < total_line_count && (read_count = read(fileno, &buffer, 1)) != 0)
+    while (current_line_count < total_line_count && (read_count = read(input_fileno, &buffer, 1)) != 0)
     {
         if (-1 == read_count)
         {

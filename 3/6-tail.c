@@ -9,11 +9,11 @@
 
 static ssize_t total_line_count;
 
-static void tail(int fileno)
+static void tail(int input_fileno)
 {
     char buffer;
     ssize_t read_count, current_line_count = 0;
-    while (current_line_count < total_line_count - 1 && (read_count = read(fileno, &buffer, 1)) != 0)
+    while (current_line_count < total_line_count - 1 && (read_count = read(input_fileno, &buffer, 1)) != 0)
     {
         if (-1 == read_count)
         {
@@ -25,7 +25,7 @@ static void tail(int fileno)
             current_line_count++;
     }
 
-    while (read(fileno, &buffer, 1) > 0)
+    while (read(input_fileno, &buffer, 1) > 0)
         write(STDOUT_FILENO, &buffer, 1);
 }
 

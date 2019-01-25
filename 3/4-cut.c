@@ -9,11 +9,11 @@
 
 static ssize_t from_position_in_line, to_position_in_line;
 
-static void cut(int fileno)
+static void cut(int input_fileno)
 {
     char buffer;
     ssize_t read_count, current_position_in_line = 0;
-    while ((read_count = read(fileno, &buffer, 1)) != 0)
+    while ((read_count = read(input_fileno, &buffer, 1)) != 0)
     {
         if (-1 == read_count)
         {

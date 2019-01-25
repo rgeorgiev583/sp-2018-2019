@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <stdbool.h>
+#include <string.h>
 
 #define MAX_STD_FILENO 2
 
@@ -11,9 +12,7 @@
 
 void fgrep(int fileno, const char* pattern)
 {
-    ssize_t pattern_length = 0;
-    while ('\0' != pattern[pattern_length])
-        pattern_length++;
+    ssize_t pattern_length = strlen(pattern);
 
     bool is_not_eof = true;
     while (is_not_eof)

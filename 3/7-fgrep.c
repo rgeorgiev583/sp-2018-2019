@@ -2,7 +2,6 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdbool.h>
 #include <string.h>
 
 #define MAX_STD_FILENO 2
@@ -15,12 +14,12 @@ static ssize_t pattern_length;
 
 static void fgrep(int input_fileno)
 {
-    bool is_not_eof = true;
-    while (is_not_eof)
+    ssize_t read_count;
+    do
     {
         char buffer[MAX_LINE_LENGTH];
-        ssize_t read_count, current_line_length = 0;
-        while (current_line_length < MAX_LINE_LENGTH && (is_not_eof = read(input_fileno, &buffer[current_line_length], 1) != 0) && buffer[current_line_length] != '\n')
+        ssize_t current_line_length = 0;
+        while (current_line_length < MAX_LINE_LENGTH && (read_count = read(input_fileno, &buffer[current_line_length], 1) != 0) && buffer[current_line_length] != '\n')
         {
             if (-1 == read_count)
             {
@@ -47,6 +46,7 @@ static void fgrep(int input_fileno)
             }
         }
     }
+    while (read_count != 0);
 }
 
 int main(int argc, const char* const* argv)

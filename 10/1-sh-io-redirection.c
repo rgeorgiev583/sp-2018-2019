@@ -4,8 +4,10 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define DEFAULT_FILE_MODE 0644
+
 #define MAX_ARG_COUNT 100
 
 static const char* argv0;
@@ -13,13 +15,13 @@ static const char* argv0;
 static int fork_exec(char* const* command_argv, const char* output_filename, const char* append_filename, const char* input_filename)
 {
     pid_t pid = fork();
-    if (-1 == pid)
+    switch (pid)
     {
+    case -1:
         perror("fork");
         exit(9);
-    }
-    else if (0 == pid)
-    {
+
+    case 0:
         if (NULL != output_filename)
         {
             int output_fileno = creat(output_filename, DEFAULT_FILE_MODE);
@@ -66,7 +68,7 @@ static int fork_exec(char* const* command_argv, const char* output_filename, con
     int status;
     wait(&status);
     int exit_status = WEXITSTATUS(status);
-    if (0 != exit_status)
+    if (exit_status != 0)
         fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", argv0, command_argv[0], pid, exit_status);
 
     return WEXITSTATUS(status);
@@ -76,7 +78,7 @@ int main(int argc, const char* const* argv)
 {
     argv0 = argv[0];
 
-    while (1)
+    while (true)
     {
         write(1, "$ ", 2);
 
@@ -98,7 +100,7 @@ int main(int argc, const char* const* argv)
             command_argc++;
             command_argv[command_argc] = strtok(NULL, " ");
         }
-        while (NULL != command_argv[command_argc]);
+        while (command_argv[command_argc] != NULL);
 
         if (0 == strcmp(command_argv[0], "exit") || 0 == strcmp(command_argv[0], "quit"))
             exit(0);

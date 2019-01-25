@@ -3,6 +3,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define MAX_ARG_COUNT 100
 
@@ -11,21 +12,24 @@ static const char* argv0;
 static int fork_exec(char* const* command_argv)
 {
     pid_t pid = fork();
-    if (-1 == pid)
+    switch (pid)
     {
+    case -1:
         perror("fork");
         exit(9);
-    }
-    else if (0 == pid && -1 == execvp(command_argv[0], command_argv))
-    {
-        fprintf(stderr, "%s: error: command `%s` does not exist\n", argv0, command_argv[0]);
-        exit(8);
+
+    case 0:
+        if (-1 == execvp(command_argv[0], command_argv))
+        {
+            fprintf(stderr, "%s: error: command `%s` does not exist\n", argv0, command_argv[0]);
+            exit(8);
+        }
     }
 
     int status;
     wait(&status);
     int exit_status = WEXITSTATUS(status);
-    if (0 != exit_status)
+    if (exit_status != 0)
         fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", argv0, command_argv[0], pid, exit_status);
 
     return WEXITSTATUS(status);
@@ -41,13 +45,13 @@ static int fork_exec_pipe(char* const* input_command_argv, char* const* output_c
     }
 
     pid_t input_command_pid = fork();
-    if (-1 == input_command_pid)
+    switch (input_command_pid)
     {
+    case -1:
         perror("fork");
         exit(9);
-    }
-    else if (0 == input_command_pid)
-    {
+
+    case 0:
         close(pipe_fileno[0]);
         dup2(pipe_fileno[1], STDOUT_FILENO);
 
@@ -59,13 +63,13 @@ static int fork_exec_pipe(char* const* input_command_argv, char* const* output_c
     }
 
     pid_t output_command_pid = fork();
-    if (-1 == output_command_pid)
+    switch (output_command_pid)
     {
+    case -1:
         perror("fork");
         exit(9);
-    }
-    else if (0 == output_command_pid)
-    {
+
+    case 0:
         dup2(pipe_fileno[0], STDIN_FILENO);
         close(pipe_fileno[1]);
 
@@ -84,7 +88,7 @@ static int fork_exec_pipe(char* const* input_command_argv, char* const* output_c
     int status;
     waitpid(output_command_pid, &status, 0);
     int exit_status = WEXITSTATUS(status);
-    if (0 != exit_status)
+    if (exit_status != 0)
         fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", argv0, output_command_argv[0], output_command_pid, exit_status);
 
     return WEXITSTATUS(status);
@@ -94,7 +98,7 @@ int main(int argc, const char* const* argv)
 {
     argv0 = argv[0];
 
-    while (1)
+    while (true)
     {
         write(1, "$ ", 2);
 
@@ -116,7 +120,7 @@ int main(int argc, const char* const* argv)
             command_argc++;
             command_argv[command_argc] = strtok(NULL, " ");
         }
-        while (NULL != command_argv[command_argc]);
+        while (command_argv[command_argc] != NULL);
 
         if (0 == strcmp(command_argv[0], "exit") || 0 == strcmp(command_argv[0], "quit"))
             exit(0);

@@ -51,7 +51,7 @@ int main(int argc, const char* const* argv)
     }
     while (buffer1 == buffer2);
 
-    if (0 != read_count1 || 0 != read_count2)
+    if (read_count1 != 0 || read_count2 != 0)
         printf("%s %s differ: byte %ld, line %ld\n", argv[1], argv[2], current_char_position, current_line_position);
 
     return 0;

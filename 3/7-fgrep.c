@@ -15,13 +15,12 @@ static ssize_t pattern_length;
 
 static void fgrep(int input_fileno)
 {
-
     bool is_not_eof = true;
     while (is_not_eof)
     {
         char buffer[MAX_LINE_LENGTH];
         ssize_t read_count, current_line_length = 0;
-        while (current_line_length < MAX_LINE_LENGTH && (is_not_eof = read(input_fileno, &buffer[current_line_length], 1) != 0) && '\n' != buffer[current_line_length])
+        while (current_line_length < MAX_LINE_LENGTH && (is_not_eof = read(input_fileno, &buffer[current_line_length], 1) != 0) && buffer[current_line_length] != '\n')
         {
             if (-1 == read_count)
             {
@@ -36,7 +35,7 @@ static void fgrep(int input_fileno)
         {
             ssize_t j;
             for (j = 0; j < pattern_length; j++)
-                if (pattern[j] != buffer[i + j])
+                if (buffer[i + j] != pattern[j])
                     break;
 
             if (pattern_length == j)

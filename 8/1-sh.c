@@ -3,12 +3,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define MAX_ARG_COUNT 100
 
 int main(int argc, const char* const* argv)
 {
-    while (1)
+    while (true)
     {
         write(1, "$ ", 2);
 
@@ -30,30 +31,31 @@ int main(int argc, const char* const* argv)
             command_argc++;
             command_argv[command_argc] = strtok(NULL, " ");
         }
-        while (NULL != command_argv[command_argc]);
+        while (command_argv[command_argc] != NULL);
 
         if (0 == strcmp(command_argv[0], "exit") || 0 == strcmp(command_argv[0], "quit"))
             exit(0);
 
         pid_t pid = fork();
-        if (-1 == pid)
+        switch (pid)
         {
+        case -1:
             perror("fork");
             exit(9);
+
+        case 0:
+            if (-1 == execvp(command_argv[0], command_argv))
+            {
+                fprintf(stderr, "%s: error: command `%s` does not exist\n", argv[0], command_argv[0]);
+                exit(8);
+            }
         }
-        else if (0 == pid && -1 == execvp(command_argv[0], command_argv))
-        {
-            fprintf(stderr, "%s: error: command `%s` does not exist\n", argv[0], command_argv[0]);
-            exit(8);
-        }
-        else
-        {
-            int status;
-            wait(&status);
-            int exit_status = WEXITSTATUS(status);
-            if (0 != exit_status)
-                fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", argv[0], command_argv[0], pid, exit_status);
-        }
+
+        int status;
+        wait(&status);
+        int exit_status = WEXITSTATUS(status);
+        if (exit_status != 0)
+            fprintf(stderr, "%s: warning: command `%s` (PID %d) exited with a non-zero status code (%d)\n", argv[0], command_argv[0], pid, exit_status);
     }
 
     return 0;

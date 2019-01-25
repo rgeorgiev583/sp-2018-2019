@@ -4,6 +4,7 @@
 #include <stdio.h>
 
 #define REQUIRED_ARG_COUNT 4
+
 #define DEFAULT_FILE_MODE 0644
 
 int main(int argc, char* const* argv)

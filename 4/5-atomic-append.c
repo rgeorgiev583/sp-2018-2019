@@ -2,8 +2,8 @@
 #include <fcntl.h>
 #include <stdlib.h>
 #include <stdio.h>
-#include <stdbool.h>
 #include <string.h>
+#include <stdbool.h>
 
 #define DEFAULT_FILE_MODE 0644
 

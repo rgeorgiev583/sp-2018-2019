@@ -18,9 +18,11 @@ int main(int argc, const char* const* argv)
         exit(5);
     }
 
+    const char* word = argv[2];
+
     lseek(output_fileno, 0, SEEK_SET);
 
-    if (-1 == write(output_fileno, argv[2], strlen(argv[2])))
+    if (-1 == write(output_fileno, word, strlen(word)))
     {
         perror("write");
         exit(4);

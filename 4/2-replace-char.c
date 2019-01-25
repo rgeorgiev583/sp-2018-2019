@@ -13,15 +13,17 @@ int main(int argc, const char* const* argv)
     if (argc < REQUIRED_ARG_COUNT + 1)
         exit(1);
 
-    if (strlen(argv[3]) > 1)
-        exit(2);
-
     ssize_t from_position = atol(argv[1]);
     if (from_position < 0)
         exit(2);
 
     ssize_t to_position = atol(argv[2]);
     if (to_position < 0)
+        exit(2);
+    
+    const char* char_str = argv[3];
+
+    if (strlen(char_str) > 1)
         exit(2);
 
     int fileno = open(argv[4], O_WRONLY, DEFAULT_FILE_MODE);
@@ -39,7 +41,7 @@ int main(int argc, const char* const* argv)
 
     for (ssize_t i = from_position; i <= to_position; i++)
     {
-        if (-1 == write(fileno, argv[3], 1))
+        if (-1 == write(fileno, char_str, 1))
         {
             perror("write");
             exit(4);

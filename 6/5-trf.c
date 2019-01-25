@@ -9,6 +9,10 @@
 
 int main(int argc, char* const* argv)
 {
+    const char* set1 = argv[1];
+
+    const char* set2 = argv[2];
+
     int input_fileno = open(argv[3], O_RDONLY);
     if (-1 == input_fileno)
     {
@@ -26,7 +30,7 @@ int main(int argc, char* const* argv)
     dup2(input_fileno, STDIN_FILENO);
     dup2(output_fileno, STDOUT_FILENO);
 
-    if (-1 == execlp("tr", "tr", argv[1], argv[2], NULL))
+    if (-1 == execlp("tr", "tr", set1, set2, NULL))
     {
         perror("exec");
         exit(8);

@@ -15,7 +15,7 @@ int main(int argc, const char* const* argv)
 
     ssize_t position = atol(argv[1]);
 
-    ssize_t word_length = strlen(argv[2]);
+    const char* word = argv[2];
 
     int fileno = open(argv[3], O_WRONLY, DEFAULT_FILE_MODE);
     if (-1 == fileno)
@@ -30,7 +30,7 @@ int main(int argc, const char* const* argv)
         exit(6);
     }
 
-    if (-1 == write(fileno, argv[2], word_length))
+    if (-1 == write(fileno, word, strlen(word)))
     {
         perror("write");
         exit(4);

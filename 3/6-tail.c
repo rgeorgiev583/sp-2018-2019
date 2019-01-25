@@ -25,8 +25,16 @@ static void tail(int input_fileno)
             current_line_count++;
     }
 
-    while (read(input_fileno, &buffer, 1) > 0)
+    while ((read_count = read(input_fileno, &buffer, 1)) != 0)
+    {
+        if (-1 == read_count)
+        {
+            perror("read");
+            exit(3);
+        }
+
         write(STDOUT_FILENO, &buffer, 1);
+    }
 }
 
 int main(int argc, const char* const* argv)

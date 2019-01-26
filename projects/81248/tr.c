@@ -36,31 +36,9 @@ char last(const char* str)
     return curr;
 }
 
-int main (int argc, const char* const * argv)
+void do_subst(bool complement, const char* inset, const char* outset)
 {
-    if (argc < REQUIRED_ARGS + 1)
-    {
-        return 1;
-    }
-
-    bool complement = false;
-
-    bool delete = false;
-
-    bool nub = false;
-
-    int argstart = 1;
-
-    if (argv[1][0] == '-')
-    {
-        ++argstart;
-        handle_flags(argv[1], &complement, &delete, &nub);
-    }
-
     char mapping[256] = {0};
-
-    const char* const inset = argv[argstart];
-    const char* const outset = argv[argstart + 1];
 
     if (complement)
     {
@@ -105,6 +83,68 @@ int main (int argc, const char* const * argv)
     while((curr = getchar()) != EOF)
     {
         putchar(mapping[curr]);
+    }
+}
+
+// TODO: IMPLEMENT COMPLEMENT FOR THIS!!!!
+void do_delete(bool complement, const char* inset)
+{
+    // a set containing the elements which should be deleted
+    bool should_delete[256] = { 0 };
+
+    for(int i = 0; inset[i] != 0; ++i)
+    {
+        should_delete[(int)inset[i]] = true;
+    }
+
+    int curr = 0;
+
+    while((curr = getchar()) != EOF)
+    {
+        if (!should_delete[curr])
+        {
+            putchar(curr);
+        }
+    }
+}
+
+int main(int argc, const char* const * argv)
+{
+    if (argc < REQUIRED_ARGS + 1)
+    {
+        return 1;
+    }
+
+    bool complement = false;
+
+    bool delete = false;
+
+    bool nub = false;
+
+    int argstart = 1;
+
+    if (argv[1][0] == '-')
+    {
+        ++argstart;
+        handle_flags(argv[1], &complement, &delete, &nub);
+    }
+
+    // if we are not deleting we need two input sets
+    if(!delete && argc < argstart + 2)
+    {
+        return 2;
+    }
+
+    const char* const inset = argv[argstart];
+    const char* const outset = argv[argstart + 1];
+
+    if (delete)
+    {
+        do_delete(complement, inset);
+    }
+    else
+    {
+        do_subst(complement, inset, outset);
     }
 
     return 0;

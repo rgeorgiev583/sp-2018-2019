@@ -1,10 +1,11 @@
 #include <unistd.h>
 #include <fcntl.h>
+#include <sys/stat.h>
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 
-#define DEFAULT_FILE_MODE 0644
+#define DEFAULT_FILE_MODE S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
 
 #define REQUIRED_ARG_COUNT 3
 

@@ -4,7 +4,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 
-#define DEFAULT_FILE_MODE 0644
+#define DEFAULT_FILE_MODE S_IRUSR | S_IWUSR | S_IRGRP | S_IROTH
 
 #define REQUIRED_ARG_COUNT 2
 

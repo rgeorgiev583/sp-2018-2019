@@ -13,7 +13,7 @@ int main(void)
         exit(9);
 
     case 0:
-        return 0;
+        exit(0);
     }
 
     int status;

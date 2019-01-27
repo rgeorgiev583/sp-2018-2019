@@ -2,6 +2,7 @@
 #include <unistd.h>
 #include <fcntl.h>
 #include <stdbool.h>
+#include <string.h>
 
 #define REQUIRED_ARGS 1
 
@@ -86,15 +87,19 @@ void do_subst(bool complement, const char* inset, const char* outset)
     }
 }
 
-// TODO: IMPLEMENT COMPLEMENT FOR THIS!!!!
 void do_delete(bool complement, const char* inset)
 {
     // a set containing the elements which should be deleted
     bool should_delete[256] = { 0 };
 
+    if (complement)
+    {
+        memset(should_delete, 1, 256);
+    }
+
     for(int i = 0; inset[i] != 0; ++i)
     {
-        should_delete[(int)inset[i]] = true;
+        should_delete[(int)inset[i]] ^= 1;
     }
 
     int curr = 0;

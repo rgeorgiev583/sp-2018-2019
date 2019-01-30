@@ -1,4 +1,4 @@
-SETS := $(shell seq 2 11) pkr projects
+SETS := $(shell seq 2 11) pkr kr projects
 
 SET_TARGET_NAMES := $(SETS:%=set_%)
 SET_CLEAN_TARGET_NAMES := $(SETS:%=set_%_clean)

@@ -32,7 +32,7 @@ int main(int argc, const char* const* argv)
 
     char buffer[BUFSIZ];
     ssize_t read_count;
-    while ((read_count = read(input_fileno, &buffer, BUFSIZ)) != 0)
+    while ((read_count = read(input_fileno, buffer, BUFSIZ)) != 0)
     {
         if (-1 == input_fileno)
         {
@@ -40,7 +40,7 @@ int main(int argc, const char* const* argv)
             exit(3);
         }
 
-        if (-1 == write(output_fileno, &buffer, read_count))
+        if (-1 == write(output_fileno, buffer, read_count))
         {
             perror("write");
             exit(4);

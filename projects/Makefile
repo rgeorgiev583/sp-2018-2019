@@ -6,9 +6,9 @@ SUBMISSION_CLEAN_TARGET_NAMES := $(SUBMISSIONS:%=submission_%_clean)
 
 .PHONY: all clean submissions submissions_clean $(SUBMISSION_TARGET_NAMES) $(SUBMISSION_CLEAN_TARGET_NAMES)
 
-all: $(BINARIES)
+all: submissions $(BINARIES)
 
-clean:
+clean: submissions_clean
 	$(RM) $(BINARIES)
 
 %: %.c

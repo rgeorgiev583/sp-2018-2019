@@ -44,4 +44,6 @@ int main(int argc, const char* const* argv)
             exit(4);
         }
     }
+
+    return 0;
 }
